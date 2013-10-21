@@ -3,7 +3,6 @@
  *
  *
  * @author 		Hendri Lubis
- * @website		http://toniharyanto.net
  * @package 	PyroCMS
  * @subpackage 	SimpleOrder
  */
@@ -25,6 +24,19 @@ class Order_m extends My_Model{
 			return $paket;
 
 	}
+
+		public function get_shipping(){
+
+		$data = $this->db->distinct()->select('id, tujuan, harga')->get('so_shipping')->result();
+			$wilayah = array();
+				foreach ($data as $value) {
+					$wilayah[$value->id] = $value->tujuan;
+				}
+				
+			return $wilayah;
+
+	}
+
 
 
 	public function getOrderProduct($id_order){

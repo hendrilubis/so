@@ -7,7 +7,7 @@
     <div class="content"> 
         <form action="#" method="post" id="pesan">
         <div id="wizard">
-            <div class="alert alert-error hide" id="errorMessage"> kampret 
+            <div class="alert alert-error hide" id="errorMessage"> Silahkan pesan produk terlebih dahulu 
             <button type="button" class="close" data-target="alert">x</button></div>
             <h2>Pilih Produk</h2>
             <section>
@@ -29,11 +29,14 @@
                                     <?php 
                                             $tglSekarang = date('Y-m-d');
                                             $tglPromo = date('Y-m-d', $item['deadline_promo']);
-                                            if($tglSekarang <= $tglPromo ): 
+                                            $harga = 0;
+                                            if($tglSekarang <= $tglPromo ):
+                                                $harga = $item['harga_promo'];
                                     ?>
-                                    <td><?php echo "Rp. "; echo number_format($item['harga_promo'], 2,",","."); ?></td>
-                                    <?php else: ?>
-                                    <td><?php echo "Rp. "; echo number_format($item['harga'], 2,",","."); ?></td>
+                                    <td><?php echo "Rp. "; echo number_format($harga, 2,",","."); ?></td>
+                                    <?php else: 
+                                                $harga = $item['harga']; ?>
+                                    <td><?php echo "Rp. "; echo number_format($harga, 2,",","."); ?></td>
                                     <?php endif; ?>
                                     <td><input type="text" name="qty[<?php echo $item['id']; ?>]" class="input-mini qty-<?php echo $item['type']['key']; ?>" value="0"></td>
                                 </tr>
@@ -63,11 +66,11 @@
                             <tbody>
                                 <tr>
                                     <td>Nama Depan</td>
-                                    <td><input type="text" class="span5" name="nama"></td>
+                                    <td><input type="text" class="span5" name="nama_depan"></td>
                                 </tr>
                                 <tr>
                                     <td>Nama Belakang</td>
-                                    <td><input type="text" class="span5" name="nama"></td>
+                                    <td><input type="text" class="span5" name="nama_belakang"></td>
                                 </tr>
                                 <tr>
                                     <td>Email</td>
@@ -78,12 +81,15 @@
                                     <td><textarea class="span5" name="alamat" class="input-large" rows="3"></textarea></td>
                                 </tr>
                                 <tr>
+                                    <!-- <?php dump($wilayah); ?> -->
                                     <td>Wilayah Pengiriman</td>
                                     <td>
-                                        <select class="span5" name="wilayah" id="wilayah">
+                                            <?php echo form_dropdown('wilayah', $wilayah, 'all'); ?>
+                                            
+                                     <!--    <select class="span5" name="wilayah" id="wilayah">
                                             <option value="jabodetabek">Jabodetabek</option>
                                             <option value="liar-jabodetabek">Luar Jabodetabek</option>
-                                        </select>
+                                        </select> -->
                                     </td>
                                 </tr>
                                 <tr>
@@ -139,6 +145,7 @@
             transitionEffect: "none",
 
             onStepChanging: function (event, currentIndex, newIndex) { 
+                // cek jika berada pada tab list pesan produk
                 if(currentIndex === 0){
                     $tryout_qty = 0;
                     $('.qty-tryout').each(function(i, v){
@@ -154,11 +161,26 @@
                     $('.qty-fisik').each(function(i, v){
                         $fisik_qty += parseInt($(v).val());
                     });
+
+                    if($tryout_qty === 0 && $digital_qty === 0 && $fisik_qty === 0){
+                        $('#errorMessage').show();
+                        return false;
+                    }
                 }
-                if($tryout_qty === 0 && $digital_qty === 0 && $fisik_qty === 0){
-                    $('#errorMessage').show();
-                    return false;
-                }
+                // cek jika berada pada tab list email
+                // if(currentIndex === 1){
+                //     for(var i=0; i<$tryout_qty; i++){
+                //         if($('.email')){
+
+                //         }
+                //     }
+                // }
+                // cek jika berada pada tab data diri
+                // if(currentIndex === 2){
+                //     if(){
+
+                //     }
+                // }
 
                 return true;
             },
@@ -175,7 +197,7 @@
                     $('#emaillist tbody').empty();
                     // alert($tryout_qty);                
                     for(var i=1; i<=$tryout_qty; i++ ){
-                        $('#emaillist tbody').append('<tr><td>Email '+i+'</td><td><input type="text" class="span5" name="email['+i+']" class="input-large"></td></tr>');
+                        $('#emaillist tbody').append('<tr><td>Email '+i+'</td><td><input type="text" class="span5" name="email['+i+']" class="input-large" id="email"></td></tr>');
                     }
                 }
                 // alert(currentIndex + ' ' + priorIndex);

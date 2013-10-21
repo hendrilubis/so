@@ -17,6 +17,7 @@ class So extends Public_Controller {
 		$this->template->append_css('module::jquery.steps.css');
 		$this->template->append_js('module::jquery.cookie-1.3.1.js');
 		$this->template->append_js('module::kampret.js');
+		$this->load->model('order_m');
 		// $this->template->append_js('module::jquery.steps.min.js');
 	}
 
@@ -30,6 +31,7 @@ class So extends Public_Controller {
 				'page_segment' 	=> 4
 				);
 		$entries = $this->streams->entries->get_entries($params);
+		$entries['wilayah'] = $this->order_m->get_shipping();
 
 		$this->template->build('index', $entries);
 	}
