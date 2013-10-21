@@ -85,7 +85,7 @@
                                     <td>Wilayah Pengiriman</td>
                                     <td>
                                             <?php echo form_dropdown('wilayah', $wilayah, 'all'); ?>
-                                            
+
                                      <!--    <select class="span5" name="wilayah" id="wilayah">
                                             <option value="jabodetabek">Jabodetabek</option>
                                             <option value="liar-jabodetabek">Luar Jabodetabek</option>
@@ -167,14 +167,16 @@
                         return false;
                     }
                 }
-                // cek jika berada pada tab list email
-                // if(currentIndex === 1){
-                //     for(var i=0; i<$tryout_qty; i++){
-                //         if($('.email')){
 
-                //         }
-                //     }
-                // }
+                // cek jika berada pada tab list email
+                if(currentIndex === 1){
+                    // for(var i=0; i<$tryout_qty; i++){
+                        if($('#span5').is(':empty')){
+                            alert("bahaha");
+                            return false;
+                        }
+                    // }
+                }
                 // cek jika berada pada tab data diri
                 // if(currentIndex === 2){
                 //     if(){
