@@ -15,8 +15,8 @@ class So extends Public_Controller {
 	public function __construct() {
 		parent::__construct();
 		$this->template->append_css('module::jquery.steps.css');
-		$this->template->append_js('module::jquery.cookie-1.3.1.js');
 		$this->template->append_js('module::kampret.js');
+		$this->template->append_js('module::jquery.cookie-1.4.0.js');
 		$this->load->model('order_m');
 		// $this->template->append_js('module::jquery.steps.min.js');
 	}
