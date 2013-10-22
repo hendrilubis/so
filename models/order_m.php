@@ -30,7 +30,7 @@ class Order_m extends My_Model{
 		$data = $this->db->distinct()->select('id, tujuan, harga')->get('so_shipping')->result();
 			$wilayah = array();
 				foreach ($data as $value) {
-					$wilayah[$value->id] = $value->tujuan;
+					$wilayah[$value->harga] = $value->tujuan;
 				}
 				
 			return $wilayah;

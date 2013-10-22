@@ -86,7 +86,7 @@
                                     <!-- <?php dump($wilayah); ?> -->
                                     <td>Wilayah Pengiriman</td>
                                     <td>
-                                            <?php echo form_dropdown('wilayah', $wilayah, 'all'); ?>
+                                            <?php echo form_dropdown('wilayah', $wilayah, 'all', 'class="wilayah"'); ?>
 
                                      <!--    <select class="span5" name="wilayah" id="wilayah">
                                             <option value="jabodetabek">Jabodetabek</option>
@@ -122,7 +122,7 @@
                 <div>
                     <p>Berikut resume pemesanan beserta data pengiriman Anda. Silakan diperbaiki apabila ada kesalahan. Bila data sudah benar, silakan klik tombol Selesai untuk konfirmasi pemesanan. Setelah data pemesanan kami terima, kami akan mengirimkan invoice pemesanan ke alamat email Anda.</p>
                     
-
+                    <div><b><h3> Data Produk </h3></b></div>
                     <section>
                         <div>
                                 <table class="table table-bordered table-condensed">
@@ -143,66 +143,43 @@
                                 </table>
                         </div>
                     </section>
-
-                        <!-- <div>
-                            <table border="1">
-                                <thead>
-                                    <tr class="title">
-                                        <th width="150px">Nama Produk</th>
-                                        <th width="150px">Harga</th>
-                                        <th width="150px">Jumlah</th>
-                                        <th width="150px">Total</th>
-                                    </tr>
-                                </thead>
-                                
-                                <tbody id="data-produk">
-                                    <tr>
-                                        <td></td>
-                                        <td></td> 
-                                        <td></td>
-                                        <td></td>
-                                    </tr>
-                                </tbody>
-                                    <tr id="total-harga">
-
-                                    </tr>
-                            </table>
-                            
-
-                            <br>
-                            
-                            <table>
-                                <thead>
-                                    <tr>
-                                        <th colspan="5" class="title"><em>Order Items</em></th>
-                                    </tr>
-                                    <tr>
-                                        <th>Product Code</th>
-                                        <th>Description</th>
-                                        <th>Price</th>
-                                        <th>Qty</th>
-                                        <th>Total</th>
-                                    </tr>
-                                </thead>
-
-                                <tbody>
-                                        <tr>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                        </tr>
-                                        <tr>
-                                            <td colspan="4" style="text-align:right"><strong>Total Bayar</strong></td>
-                                            <td><strong></strong></td>
-                                        </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                    <ul id="data-email"></ul>
-                    <div id="data-diri"></div>
-                </div> -->
+                    <div><b><h3> Data Diri </h3></b></div>
+                    <table class="table">
+                            <tbody>
+                                <tr>
+                                    <td>Nama Depan</td>
+                                    <td class="nama-depan"></td>
+                                </tr>
+                                <tr>
+                                    <td>Nama Belakang</td>
+                                    <td class="nama-belakang"></td>
+                                </tr>
+                                <tr>
+                                    <td>Email</td>
+                                    <td class="email-primer"></td>
+                                </tr>
+                                <tr>
+                                    <td>Alamat Kirim</td>
+                                    <td class="alamat-kirim"></td>
+                                </tr>
+                                <tr>
+                                    <td>Wilayah Pengiriman</td>
+                                    <td class="wilayah-kirim"></td>
+                                </tr>
+                                <tr>
+                                    <td>Nama Sekolah</td>
+                                    <td class="nama-sekolah"></td>
+                                </tr>
+                                <tr>
+                                    <td>Provinsi Sekolah</td>
+                                    <td class="provinsi-sekolah"></td>
+                                </tr>
+                                <tr>
+                                    <td>Alamat Lengkap Sekolah</td>
+                                    <td class="alamat-sekolah"></td>
+                                </tr>
+                            </tbody>
+                        </table>
             </section>
         </div>
         </form>
@@ -230,6 +207,7 @@
             bodyTag: "section",
             transitionEffect: "none",
 
+            // sebelum pindah step
             onStepChanging: function (event, currentIndex, newIndex) { 
                 // cek jika berada pada tab list pesan produk
                 if(currentIndex === 0){
@@ -264,6 +242,7 @@
                         });
 
                     $.cookie('products', JSON.stringify(pdata));
+                    console.log(JSON.stringify(pdata));
 
                 }
 
@@ -280,83 +259,31 @@
 
                     $.cookie('email', JSON.stringify(edata));
                 }
+
                 // cek jika berada pada tab data diri
+                // data kan cuma satu, jadi ga perlu di each. buat semua data dalam satu objek
                 if(currentIndex === 2){
                     $('#errorMessage').hide();
                     // menyimpan field nama depan ke cookie
-                    var namaDepan = new Array();
-                    var i=0;
-                    $('.nama-depan').each(function(i, v){
-                        namaDepan[i] = $(v).val();
-                        i++;
-                    });
-                    $.cookie('nama-depan', JSON.stringify(namaDepan));
-                    
-                    // menyimpan field nama belakang ke cookie
-                    var namaBelakang = new Array();
-                    var i=0;
-                    $('.nama-belakang').each(function(i, v){
-                        namaBelakang[i] = $(v).val();
-                        i++;
-                    });
-                    $.cookie('nama-belakang', JSON.stringify(namaBelakang));
+                    var ddata = {
+                        namaDepan: $('.nama-depan').val(),
+                        namaBelakang: $('.nama-belakang').val(),
+                        emailPrimer: $('.email-primer').val(),
+                        alamat: $('.alamat').val(),
+                        wilayah: $('.wilayah').val(),
+                        sekolah: $('.sekolah').val(),
+                        provinsi: $('.provinsi').val(),
+                        alamatSekolah: $('.alamat-sekolah').val(),
+                        // dst, dst.
+                    }
 
-                    // menyimpan field email ke cookie
-                    var emailPrimer = new Array();
-                    var i=0;
-                    $('.email-primer').each(function(i, v){
-                        emailPrimer[i] = $(v).val();
-                        i++;
-                    });
-                    $.cookie('email-primer', JSON.stringify(emailPrimer));
-
-                    // menyimpan field alamat ke cookie
-                    var alamat = new Array();
-                    var i=0;
-                    $('.alamat').each(function(i, v){
-                        alamat[i] = $(v).val();
-                        i++;
-                    });
-                    $.cookie('alamat', JSON.stringify(alamat));
-                    // menyimpan field wilayah ke cookie
-                    var wilayah = new Array();
-                    var i=0;
-                    $('#wilayah').each(function(i, v){
-                        wilayah[i] = $(v).val();
-                        i++;
-                    });
-                    $.cookie('wilayah', JSON.stringify(wilayah));
-
-                    // menyimpan field sekolah ke cookie
-                    var sekolah = new Array();
-                    var i=0;
-                    $('.sekolah').each(function(i, v){
-                        sekolah[i] = $(v).val();
-                        i++;
-                    });
-                    $.cookie('sekolah', JSON.stringify(sekolah));
-
-                    // menyimpan field provinsi ke cookie
-                    var provinsi = new Array();
-                    var i=0;
-                    $('.provinsi').each(function(i, v){
-                        provinsi[i] = $(v).val();
-                        i++;
-                    });
-                    $.cookie('provinsi', JSON.stringify(provinsi));
-
-                    // menyimpan field alamat sekolah ke cookie
-                    var alamatSekolah = new Array();
-                    var i=0;
-                    $('.alamat-sekolah').each(function(i, v){
-                        alamatSekolah[i] = $(v).val();
-                        i++;
-                    });
-                    $.cookie('alamat-sekolah', JSON.stringify(alamatSekolah));
+                    $.cookie('ddata', JSON.stringify(ddata));
                 }
 
                 return true;
             },
+
+            // setelah pindah step
             onStepChanged: function (event, currentIndex, priorIndex)
             {
                 if (currentIndex === 1 && priorIndex === 0 && $tryout_qty <= 1){
@@ -383,13 +310,42 @@
                     $('#data-produk').empty();
                     for(var i=0; i < order.length; i++){
                         if(order[i].product_qty > 0){
+                            
                             var totalbiaya = order[i].product_harga * order[i].product_qty;
                             hargaTotal += totalbiaya;
+
                             $('#data-produk').append('<tr><td>' + order[i].product_name + '</td><td>' + order[i].product_harga + '</td><td>' + order[i].product_qty + '</td><td>' + totalbiaya + '</td></tr>');
                         }
                     }
+
+                    /* menampilkan data diri yang disimpan di cookie */
+                    var dataDiri = JSON.parse($.cookie('ddata'));
+                    console.log(dataDiri);
+
+                        $('.nama-depan').empty();
+                        $('.nama-depan').append(dataDiri.namaDepan);
+                        $('.nama-belakang').empty();
+                        $('.nama-belakang').append(dataDiri.namaBelakang);
+                        $('.email-primer').empty();
+                        $('.email-primer').append(dataDiri.emailPrimer);
+                        $('.alamat-kirim').empty();
+                        $('.alamat-kirim').append(dataDiri.alamat);
+                        $('.wilayah-kirim').empty();
+                        $('.wilayah-kirim').append(dataDiri.wilayah);
+                        $('.nama-sekolah').empty();
+                        $('.nama-sekolah').append(dataDiri.sekolah);
+                        $('.provinsi-sekolah').empty();
+                        $('.provinsi-sekolah').append(dataDiri.provinsi);
+                        $('.alamat-sekolah').empty();
+                        $('.alamat-sekolah').append(dataDiri.alamatSekolah);
+
+                        /* akhir dari menampilkan data diri */                    
+
+                    hargaTotal += parseInt(dataDiri.wilayah);
                     console.log(hargaTotal);
+                    $('#total-harga').empty();
                     $('#total-harga').append('<tr><td><b>Total Bayar</b></td><td>' + hargaTotal + '</td>');
+                    
                     // menampilkan data email yang disimpan di cookie
                     if($tryout_qty > 1){
                         var emaillist = JSON.parse($.cookie('email'));
@@ -400,69 +356,31 @@
                             }
                     }
 
-                    /* menampilkan data diri yang disimpan di cookie */
-                    // menampikan data nama depan
-                    var namadepan = JSON.parse($.cookie('nama-depan'));
-                    console.log(namadepan);
-                    $('#data-diri').empty();
-                        for(var k=0; k < namadepan.length; k++){
-                            $('#data-diri').append('<li>' + namadepan[k] + '</li>');
-                        }
-
-                    // menampikan data nama belakang
-                    var namabelakang = JSON.parse($.cookie('nama-belakang'));
-                    console.log(namabelakang);
-                        for(var k=0; k < namabelakang.length; k++){
-                            $('#data-diri').append('<li>' + namabelakang[k] + '</li>');
-                        }
-
-                    // menampikan data email
-                    var dataemail = JSON.parse($.cookie('email-primer'));
-                    console.log(dataemail);
-                        for(var k=0; k < dataemail.length; k++){
-                            $('#data-diri').append('<li>' + dataemail[k] + '</li>');
-                        }
-
-                    // menampikan data alamat pribadi
-                    var alamat = JSON.parse($.cookie('alamat'));
-                    console.log(alamat);
-                        for(var k=0; k < alamat.length; k++){
-                            $('#data-diri').append('<li>' + alamat[k] + '</li>');
-                        }
-
-                    // menampikan data wilayah pengiriman
-                    var wilayah = JSON.parse($.cookie('wilayah'));
-                    console.log(wilayah);
-                        for(var k=0; k < wilayah.length; k++){
-                            $('#data-diri').append('<li>' + wilayah[k] + '</li>');
-                        }
-
-                    // menampikan data sekolah
-                    var sekolah = JSON.parse($.cookie('sekolah'));
-                    console.log(sekolah);
-                        for(var k=0; k < sekolah.length; k++){
-                            $('#data-diri').append('<li>' + sekolah[k] + '</li>');
-                        }
-
-                    // menampikan data provinsi
-                    var provinsi = JSON.parse($.cookie('provinsi'));
-                    console.log(provinsi);
-                        for(var k=0; k < provinsi.length; k++){
-                            $('#data-diri').append('<li>' + provinsi[k] + '</li>');
-                        }
-
-                    // menampikan data alamat sekolah
-                    var alamatSekolah = JSON.parse($.cookie('alamat-sekolah'));
-                    console.log(alamatSekolah);
-                        for(var k=0; k < alamatSekolah.length; k++){
-                            $('#data-diri').append('<li>' + alamatSekolah[k] + '</li>');
-                        }
-
-                    /* akhir dari menampilkan data diri */
+                    
+                    
                 }
 
                 $('#wizard .content').height($('.body.current').children('div').height() + 50);
             },
+
+            // ketika akan finishing
+            onFinishing: function (event, currentIndex)
+            { 
+                // 1. cek kelengkapan data
+
+
+                // 2. kirim data via ajax
+                $.ajax({
+                    url: "<?php echo site_url('so/simpan_pesanan'); ?>",
+                    type: 'POST',
+                    data: {ddata: $.cookie('ddata'), pdata: $.cookie('pdata'), edata: $.cookie('edata')}
+                }).done(function() {
+                    // script kalo data sudah berhasil disimpan
+
+                    return true;
+                });
+
+            }
 
         });
 
