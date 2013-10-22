@@ -35,4 +35,21 @@ class So extends Public_Controller {
 
 		$this->template->build('index', $entries);
 	}
+
+	public function simpanPesan(){
+		if('$_POST'){
+			$data['datadiri'] = json_decode($this->input->post('ddata'));
+			$data['dataproduk'] = json_decode($this->input->post('pdata'));
+			$data['dataemail'] = json_decode($this->input->post('edata'));
+		$nama = array(
+			'first_name' => $data['datadiri']->namaDepan,
+			);
+		$this->model->insert($data['dataproduk']);
+
+			print_r($data['datadiri']);
+
+			// $dump($datadiri);
+		}
+
+	}
 }

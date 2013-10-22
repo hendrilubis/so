@@ -17,6 +17,7 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Produk</th>
+                                    <th>Type</th>
                                     <th>Harga</th>
                                     <th>Qty</th>
                                 </tr>
@@ -26,6 +27,7 @@
                                 <tr>
                                     <td><?php echo $i; ?></td>
                                     <td><?php echo $item['product_code']; ?></td>
+                                    <td><?php echo $item['type']['key']; ?></td>
                                     <?php 
                                             $tglSekarang = date('Y-m-d');
                                             $tglPromo = date('Y-m-d', $item['deadline_promo']);
@@ -142,6 +144,7 @@
                                     </tfoot>
                                 </table>
                         </div>
+                        <tr class="error">Ini hendri</tr>
                     </section>
                     <div><b><h3> Data Diri </h3></b></div>
                     <table class="table">
@@ -179,7 +182,13 @@
                                     <td class="alamat-sekolah"></td>
                                 </tr>
                             </tbody>
-                        </table>
+                    </table>
+                    
+                    <div><b><h3 id="listemail"></h3></b></div>
+                    <table class="table">
+                        <tbody id="data-email">
+                        </tbody>
+                    </table>
             </section>
         </div>
         </form>
@@ -271,6 +280,7 @@
                         emailPrimer: $('.email-primer').val(),
                         alamat: $('.alamat').val(),
                         wilayah: $('.wilayah').val(),
+                        wil: $('.wilayah').children('option:selected').html(),
                         sekolah: $('.sekolah').val(),
                         provinsi: $('.provinsi').val(),
                         alamatSekolah: $('.alamat-sekolah').val(),
@@ -331,7 +341,7 @@
                         $('.alamat-kirim').empty();
                         $('.alamat-kirim').append(dataDiri.alamat);
                         $('.wilayah-kirim').empty();
-                        $('.wilayah-kirim').append(dataDiri.wilayah);
+                        $('.wilayah-kirim').append(dataDiri.wil);
                         $('.nama-sekolah').empty();
                         $('.nama-sekolah').append(dataDiri.sekolah);
                         $('.provinsi-sekolah').empty();
@@ -340,24 +350,27 @@
                         $('.alamat-sekolah').append(dataDiri.alamatSekolah);
 
                         /* akhir dari menampilkan data diri */                    
-
-                    hargaTotal += parseInt(dataDiri.wilayah);
+                    // cek jika produk yg dipesan adalah produk fisik maka + 10000
+                    if($fisik_qty >= 1){
+                        hargaTotal += parseInt(dataDiri.wilayah);
+                    }
                     console.log(hargaTotal);
                     $('#total-harga').empty();
-                    $('#total-harga').append('<tr><td><b>Total Bayar</b></td><td>' + hargaTotal + '</td>');
+                    $('#total-harga').append('<tr><td colspan="3"><b>Total Bayar</b></td><td>' + hargaTotal + '</td>');
                     
                     // menampilkan data email yang disimpan di cookie
                     if($tryout_qty > 1){
+                        $('#listemail').empty();
+                        $('#listemail').append('List Email Tryout');
                         var emaillist = JSON.parse($.cookie('email'));
                         console.log(emaillist);
                         $('#data-email').empty();
                             for(var j=0; j < $tryout_qty; j++){
-                                $('#data-email').append('<li>' + emaillist[j] + '</li>');
+                                var i = 1; i += j;
+                                $('#data-email').append('<tr><td> Email '+ i +' </td><td>' + emaillist[j] + '</td></tr>');
                             }
                     }
 
-                    
-                    
                 }
 
                 $('#wizard .content').height($('.body.current').children('div').height() + 50);
@@ -371,12 +384,12 @@
 
                 // 2. kirim data via ajax
                 $.ajax({
-                    url: "<?php echo site_url('so/simpan_pesanan'); ?>",
+                    url: "<?php echo site_url('so/simpanPesan'); ?>",
                     type: 'POST',
                     data: {ddata: $.cookie('ddata'), pdata: $.cookie('pdata'), edata: $.cookie('edata')}
-                }).done(function() {
+                }).done(function(msg) {
                     // script kalo data sudah berhasil disimpan
-
+                    alert( "Data Saved: " + msg );
                     return true;
                 });
 
@@ -386,7 +399,7 @@
 
         $('.close').click(function(){
             $('.'+$(this).attr('data-target')).hide();
-        })
+        });
 
     })
     </script>
