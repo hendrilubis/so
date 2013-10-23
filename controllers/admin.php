@@ -46,7 +46,7 @@ class Admin extends Admin_Controller {
 		$where = '';
 
 		if($this->input->post('status')){
-			$where .= "`default_so_order`.`status`= '".$this->input->post('status')."' ";
+			$where .= SITE_REF."_so_order.status= '".$this->input->post('status')."' ";
 		}
 
 		$params = array(

@@ -48,11 +48,11 @@ class Admin_orderto extends Admin_Controller {
 		$where = '';
 
 		if($this->input->post('status')){
-			$where .= "`default_so_to_user`.`status_pengerjaan`= '".$this->input->post('status')."' ";
+			$where .= SITE_REF."_so_to_user.status_pengerjaan= '".$this->input->post('status')."' ";
 		}
 
 		if($this->input->post('paket') != 'all'){
-			$where .= "AND `default_so_to_user`.`paket_id`= ".$this->input->post('paket')." ";
+			$where .= "AND ".SITE_REF."_so_to_user.paket_id= ".$this->input->post('paket')." ";
 		}
 
 		// print_r($this->input->post('status'));

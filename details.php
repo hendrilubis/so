@@ -32,15 +32,15 @@ class Module_So extends Module
             'menu' => 'content',
             'sections' => array(
                 'order_product' => array(
-                    'name' => 'List Order Product',
+                    'name' => 'Product Order',
                     'uri' => 'admin/so',
                 ),
                 'order_to' => array(
-                    'name' => 'List Order TO',
+                    'name' => 'Try Out Order',
                     'uri' => 'so/admin_orderto',
                 ),
                 'product' => array(
-                    'name' => 'List Product',
+                    'name' => 'Product List',
                     'uri' => 'so/admin_product',
                     'shortcuts' => array(
                         'create' => array(

@@ -16,7 +16,7 @@ $lang['simple_order:status_pengerjaan']			= 'Status Pengerjaan';
 $lang['simple_order:nilai']			= 'Nilai';
 $lang['simple_order:paket']			= 'Paket';
 $lang['simple_order:new']			= 'Add New Product';
-$lang['simple_order:product_list']			= 'List Product';
+$lang['simple_order:product_list']			= 'Product List';
 $lang['simple_order:product_edit']			= 'Edit Product';
 $lang['simple_order:product_delete']			= 'Product Berhasil di Hapus';
 
