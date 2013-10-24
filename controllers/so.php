@@ -45,8 +45,9 @@ class So extends Public_Controller {
 		// 	'first_name' => $data['datadiri']->namaDepan,
 		// 	);
 		// $this->model->insert($data['dataproduk']);
+			$tahik = $data['datadiri']->namaDepan;
 
-			print_r($data['datadiri']->namaDepan);
+			print_r($tahik);
 
 			// $dump($datadiri);
 		}
