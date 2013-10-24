@@ -41,12 +41,12 @@ class So extends Public_Controller {
 			$data['datadiri'] = json_decode($this->input->post('ddata'));
 			$data['dataproduk'] = json_decode($this->input->post('pdata'));
 			$data['dataemail'] = json_decode($this->input->post('edata'));
-		$nama = array(
-			'first_name' => $data['datadiri']->namaDepan,
-			);
-		$this->model->insert($data['dataproduk']);
+		// $nama = array(
+		// 	'first_name' => $data['datadiri']->namaDepan,
+		// 	);
+		// $this->model->insert($data['dataproduk']);
 
-			print_r($data['datadiri']);
+			print_r($data['datadiri']->namaDepan);
 
 			// $dump($datadiri);
 		}

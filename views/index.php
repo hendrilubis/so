@@ -17,7 +17,6 @@
                                 <tr>
                                     <th>No</th>
                                     <th>Produk</th>
-                                    <th>Type</th>
                                     <th>Harga</th>
                                     <th>Qty</th>
                                 </tr>
@@ -27,7 +26,6 @@
                                 <tr>
                                     <td><?php echo $i; ?></td>
                                     <td><?php echo $item['product_code']; ?></td>
-                                    <td><?php echo $item['type']['key']; ?></td>
                                     <?php 
                                             $tglSekarang = date('Y-m-d');
                                             $tglPromo = date('Y-m-d', $item['deadline_promo']);
@@ -35,10 +33,20 @@
                                             if($tglSekarang <= $tglPromo ):
                                                 $harga = $item['harga_promo'];
                                     ?>
-                                    <td><?php echo "Rp. "; echo number_format($harga, 2,",","."); ?></td>
+                                    <td><?php echo "Rp. "; echo number_format($harga, 2,",","."); $hargakirim = $harga + 10000; 
+                                                    if($item['type']['key'] == "fisik"){ 
+                                                        echo "<br />(Luar Jabodetabek "; 
+                                                        echo $hargakirim; 
+                                                        echo ")"; 
+                                                    }?></td>
                                     <?php else: 
                                                 $harga = $item['harga']; ?>
-                                    <td><?php echo "Rp. "; echo number_format($harga, 2,",","."); ?></td>
+                                    <td><?php echo "Rp. "; echo number_format($harga, 2,",","."); $hargakirim = $harga + 10000; 
+                                                    if($item['type']['key'] == "fisik"){ 
+                                                        echo "<br />(Luar Jabodetabek "; 
+                                                        echo $hargakirim; 
+                                                        echo ")"; 
+                                                    }?></td>
                                     <?php endif; ?>
                                     <td><input type="text" name="qty[<?php echo $item['id']; ?>]" class="input-mini products qty-<?php echo $item['type']['key']; ?>" 
                                         data-product-id="<?php echo $item['id']; ?>" data-product-name="<?php echo $item['product_code']; ?>" 
@@ -144,7 +152,6 @@
                                     </tfoot>
                                 </table>
                         </div>
-                        <tr class="error">Ini hendri</tr>
                     </section>
                     <div><b><h3> Data Diri </h3></b></div>
                     <table class="table">
@@ -389,7 +396,7 @@
                     data: {ddata: $.cookie('ddata'), pdata: $.cookie('pdata'), edata: $.cookie('edata')}
                 }).done(function(msg) {
                     // script kalo data sudah berhasil disimpan
-                    alert( "Data Saved: " + msg );
+                    console.log(msg);
                     return true;
                 });
 
