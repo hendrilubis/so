@@ -53,8 +53,7 @@ class So extends Public_Controller {
 			/* Logic untuk menghitung total biaya */
 			foreach ($data['dataproduk'] as $value) {
 					if($value->product_qty > 0){
-						$idProduk = $value->product_id;
-						$get_dataP = $this->order_m->get_product($idProduk);
+						$get_dataP = $this->order_m->get_product($value->product_id);
 						$produk[] = $value;
 						$tglSekarang = date('Y-m-d');
 						$tglPromo = date('Y-m-d', strtotime($get_dataP->deadline_promo));
@@ -62,20 +61,21 @@ class So extends Public_Controller {
 
 						// cek jika tanggal sekarang apakah ada promo
 						if($tglSekarang <= $tglPromo){
+							// cek jika product typenya fisik maka harus ditambahkan biaya						
 								if($value->product_type == "fisik"){
-									$price = $get_dataP->harga_promo;
-									$qty = $value->product_qty;
-									$total += $qty * ($price + $data['datadiri']->wilayah);
+									$total += $value->product_qty * ($get_dataP->harga_promo + $data['datadiri']->wilayah);
+								}else{
+									$total += $value->product_qty * $get_dataP->harga_promo;
 								}
 						}
 						else{
-							if($value->product_type == "fisik"){
-									$price = $get_dataP->harga;
-									$qty = $value->product_qty;
-									$total += $qty * ($price + $data['datadiri']->wilayah);
+							// cek jika product typenya fisik maka harus ditambahkan biaya
+								if($value->product_type == "fisik"){
+									$total += $value->product_qty * ($get_dataP->harga + $data['datadiri']->wilayah);
+								}else{
+									$total += $value->product_qty * $get_dataP->harga;
 								}
 						}
-						// cek jika product typenya fisik maka harus ditambahkan biaya						
 					}
 			}
 
@@ -90,23 +90,32 @@ class So extends Public_Controller {
 			$order_id = $this->streams->entries->insert_entry($order, 'order', 'streams');
 
 
-			// foreach ($produk as $value){
-			// 		$price = $value->
-					
-			// }
+			foreach ($produk as $items){
+				$getdataproduct = $this->order_m->get_product($items->product_id);
+				$tglSekarang = date('Y-m-d');
+				$tglPromo = date('Y-m-d', strtotime($getdataproduct->deadline_promo));
+				$currentPrice = 0;
 
-			$orderProduk = array(
-								'row_id' => $order_id,
-								'order_id' => 8,
-								'product_id' => $idProduk,
-								'current_price' => $price,
-								'qty' => $qty,
-								'sub_total' => $total
+					if($tglSekarang <= $tglPromo){
+						$currentPrice = $getdataproduct->harga_promo;
+					}else{
+						$currentPrice = $getdataproduct->harga;
+					}
+
+					$subTotal = $currentPrice * $items->product_qty;
+
+
+					$orderProduk = array(
+									'row_id' => $order_id,
+									'order_id' => 8,
+									'product_id' => $items->product_id,
+									'current_price' => $currentPrice,
+									'qty' => $items->product_qty,
+									'sub_total' => $subTotal
 								);
 
-			$this->order_m->insertOrderProduk($orderProduk);
-			
-			$tahik = $data['datadiri']->namaDepan;
+					$this->order_m->insertOrderProduk($orderProduk);
+			}
 				
 				foreach($data['dataemail'] as $email){
 					// daftarkan email pesanan produk menjadi user register
