@@ -1,6 +1,5 @@
 <!-- main column -->
 <?php //dump($entries);?>
-
     <div class="content">
         <h1>Form Pemesanan</h1>
     </div>
@@ -50,7 +49,7 @@
                                     <?php endif; ?>
                                     <td><input type="text" name="qty[<?php echo $item['id']; ?>]" class="input-mini products qty-<?php echo $item['type']['key']; ?>" 
                                         data-product-id="<?php echo $item['id']; ?>" data-product-name="<?php echo $item['product_code']; ?>" 
-                                        data-product-harga="<?php echo $harga ?>" value="0"></td>
+                                        data-product-harga="<?php echo $harga ?>" data-product-type="<?php echo $item['type']['key']; ?>" value="0"></td>
                                 </tr>
                                 <?php $i++; endforeach; ?>
                             </tbody>
@@ -253,6 +252,7 @@
                             pdata[i] = { product_id: $(v).attr('data-product-id'),
                                         product_name: $(v).attr('data-product-name'),
                                         product_harga: $(v).attr('data-product-harga'),
+                                        product_type: $(v).attr('data-product-type'),
                                         product_qty: $(v).val() };
                             i++;
                         });
@@ -359,7 +359,7 @@
                         /* akhir dari menampilkan data diri */                    
                     // cek jika produk yg dipesan adalah produk fisik maka + 10000
                     if($fisik_qty >= 1){
-                        hargaTotal += parseInt(dataDiri.wilayah);
+                        hargaTotal += parseInt(dataDiri.wilayah) * $fisik_qty;
                     }
                     console.log(hargaTotal);
                     $('#total-harga').empty();
@@ -393,7 +393,7 @@
                 $.ajax({
                     url: "<?php echo site_url('so/simpanPesan'); ?>",
                     type: 'POST',
-                    data: {ddata: $.cookie('ddata'), pdata: $.cookie('pdata'), edata: $.cookie('edata')}
+                    data: {ddata: $.cookie('ddata'), pdata: $.cookie('products'), edata: $.cookie('email')}
                 }).done(function(msg) {
                     // script kalo data sudah berhasil disimpan
                     console.log(msg);

@@ -26,7 +26,7 @@ class Order_m extends My_Model{
 
 	}
 
-		public function get_shipping(){
+	public function get_shipping(){
 
 		$data = $this->db->distinct()->select('id, tujuan, harga')->get('so_shipping')->result();
 			$wilayah = array();
@@ -35,6 +35,15 @@ class Order_m extends My_Model{
 				}
 				
 			return $wilayah;
+
+	}
+
+	public function get_product($id_product){
+
+		return $this->db->select('harga, deadline_promo, harga_promo')
+						->from('so_product')
+						->where('id', $id_product)
+						->get()->row();
 
 	}
 
@@ -48,9 +57,11 @@ class Order_m extends My_Model{
 						->get()->result();
 	}
 
-	public function insertOrder($order){
+	public function insertOrderProduk($order){
+
 		if(is_array($order) && !empty($order)) {
-            $this->db->insert('so_order',$order);
+            $this->db->insert('so_order_product',$order);
         }
+
 	}
 }
