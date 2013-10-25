@@ -45,9 +45,21 @@ class So extends Public_Controller {
 		// 	'first_name' => $data['datadiri']->namaDepan,
 		// 	);
 		// $this->model->insert($data['dataproduk']);
+			$userId = $this->current_user->id;
+			$harga = 10; //hitung lagi barang beli user
+			$order = array(
+						'created_by' => $userId,
+						'status' => "pending",
+						'alamat_kirim' => $data['datadiri']->alamat,
+						'user_id' => $userId,
+						'harga' => 10000
+						);
 			$tahik = $data['datadiri']->namaDepan;
+			// foreach($data['dataemail'] as $email){
+			print_r($data['dataemail']);
+			// }
 
-			print_r($tahik);
+			// print_r($userId);
 
 			// $dump($datadiri);
 		}

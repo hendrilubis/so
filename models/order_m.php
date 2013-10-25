@@ -9,6 +9,7 @@
 
 class Order_m extends My_Model{
 
+
 	public function __construct(){
 		parent::__construct();
 	}
@@ -37,8 +38,6 @@ class Order_m extends My_Model{
 
 	}
 
-
-
 	public function getOrderProduct($id_order){
 
 		return $this->db->select('so_order_product.*')
@@ -47,5 +46,11 @@ class Order_m extends My_Model{
 						->join('so_product', 'so_order_product.product_id = so_product.id')
 						->where('so_order_product.row_id', $id_order)
 						->get()->result();
+	}
+
+	public function insertOrder($order){
+		if(is_array($order) && !empty($order)) {
+            $this->db->insert('so_order',$order);
+        }
 	}
 }
