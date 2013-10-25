@@ -146,6 +146,8 @@
 
                                     <tbody id="data-produk">
                                     </tbody>
+                                    <tbody id="biaya-kirim">
+                                    </tbody>
                                     <tfoot id="total-harga">
 
                                     </tfoot>
@@ -323,10 +325,14 @@
                     // menampilkan data produk yang disimpan di cookie
                     var order = JSON.parse($.cookie('products'));
                     console.log(order);
-                    var hargaTotal = 0
+                    var hargaTotal = 0;
+                    var biayaKirim = 0;
                     $('#data-produk').empty();
                     for(var i=0; i < order.length; i++){
                         if(order[i].product_qty > 0){
+                            if($fisik_qty >= 1){
+                                biayaKirim = $fisik_qty * 10000;
+                            }
                             
                             var totalbiaya = order[i].product_harga * order[i].product_qty;
                             hargaTotal += totalbiaya;
@@ -362,6 +368,8 @@
                         hargaTotal += parseInt(dataDiri.wilayah) * $fisik_qty;
                     }
                     console.log(hargaTotal);
+                    $('#biaya-kirim').empty();
+                    $('#biaya-kirim').append('<tr><td colspan="3">Biaya Kirim Luar Jabodetabek</td><td>' + biayaKirim + '</td>');
                     $('#total-harga').empty();
                     $('#total-harga').append('<tr><td colspan="3"><b>Total Bayar</b></td><td>' + hargaTotal + '</td>');
                     

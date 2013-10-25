@@ -79,7 +79,7 @@ class So extends Public_Controller {
 					}
 			}
 
-			// menyusun data dr data yg telah dilempar dari ajax kedalam array order
+			// // menyusun data dr data yg telah dilempar dari ajax kedalam array order
 			$order = array(
 						'status' => "pending",
 						'alamat_kirim' => $data['datadiri']->alamat,
@@ -87,7 +87,7 @@ class So extends Public_Controller {
 						'harga' => $total
 						);
 
-			$order_id = $this->streams->entries->insert_entry($order, 'order', 'streams');
+			// $order_id = $this->streams->entries->insert_entry($order, 'order', 'streams');
 
 
 			foreach ($produk as $items){
@@ -104,9 +104,8 @@ class So extends Public_Controller {
 
 					$subTotal = $currentPrice * $items->product_qty;
 
-
 					$orderProduk = array(
-									'row_id' => $order_id,
+									// 'row_id' => $order_id,
 									'order_id' => 8,
 									'product_id' => $items->product_id,
 									'current_price' => $currentPrice,
@@ -114,12 +113,22 @@ class So extends Public_Controller {
 									'sub_total' => $subTotal
 								);
 
-					$this->order_m->insertOrderProduk($orderProduk);
+					// $this->order_m->insertOrderProduk($orderProduk);
 			}
 				
+				$i=1; 
 				foreach($data['dataemail'] as $email){
 					// daftarkan email pesanan produk menjadi user register
-					print_r($email); echo "hendri";
+					$username = 'username'.$i;
+					$password = 'kehed';
+					$additional_data = array(
+											'display_name' => "No Name",
+											'first_name' => "first",
+											'last_name' => "last"
+											);
+					$this->ion_auth->register($username, $password, $email, null, $additional_data, 'user');
+					$i++;
+					// data kedua email sudah masuk kedatabase tapi pas di profile cuma 1 data yg masuk
 				}
 
 			// print_r($userId);
