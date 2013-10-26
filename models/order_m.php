@@ -73,7 +73,7 @@ class Order_m extends My_Model{
 	{
 		return $paket = $this->db->select('id')
 				->from('to_paket')
-				->where('produk_id', $produk_id)
+				->where('produk_id', $product_id)
 				->get()->result();
 	}
 }
