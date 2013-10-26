@@ -28,7 +28,6 @@ class Events_so{
 			{
 
 				$this->ci->load->driver('Streams');
-				$this->ci->load->helper('string');
 				$this->ci->load->model('order_m');
 				
 				// ambil produk tryout apa saja yang dipesan
