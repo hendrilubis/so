@@ -79,7 +79,12 @@ class Admin extends Admin_Controller {
 
 		$order['data'] = $this->streams->entries->get_entry($id, 'order', 'streams', true);
 
-		$order['orderproduct'] = $this->order_m->getOrderProduct($id);
+		$params = array(
+				'stream' => 'product_order',
+				'namespace' => 'streams',
+				'where' => "order_id = $id"
+			);
+		$order['orderproduct'] = $this->streams->entries->get_entries($params);
 
 		$this->template->build('admin/form_edit', $order);
 

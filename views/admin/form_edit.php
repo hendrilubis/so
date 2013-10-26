@@ -44,13 +44,13 @@
         	</thead>
 
 	        <tbody>
-	            <?php if(!empty($orderproduct)): 
-	            	foreach($orderproduct as $items):?>
+	            <?php if(!empty($orderproduct['entries'])): 
+	            	foreach($orderproduct['entries'] as $items):?>
 	                <tr>
-		                <td><?php echo $items->product_code; ?></td>
-		                <td><?php echo $this->settings->currency; ?> <?php echo number_format($items->current_price, 2, ",", "."); ?></td>
-		                <td><?php echo $items->qty; ?></td>
-		                <td style="text-align:right"><?php echo $this->settings->currency; ?> <?php echo number_format($items->sub_total, 2, ",", "."); ?></td>
+		                <td><?php echo $items['produk_id']['product_code']; ?></td>
+		                <td><?php echo $this->settings->currency; ?> <?php echo number_format($items['harga'], 2, ",", "."); ?></td>
+		                <td><?php echo $items['qty']; ?></td>
+		                <td style="text-align:right"><?php echo $this->settings->currency; ?> <?php echo number_format($items['sub_total'], 2, ",", "."); ?></td>
 		            </tr>
 				<?php endforeach; endif; ?>	
 					<tr>
