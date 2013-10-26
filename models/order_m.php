@@ -68,4 +68,12 @@ class Order_m extends My_Model{
         }
 
 	}
+
+	function get_paket_id($product_id)
+	{
+		return $paket = $this->db->select('id')
+				->from('to_paket')
+				->where('produk_id', $produk_id)
+				->get()->result();
+	}
 }

@@ -33,30 +33,29 @@
     	<table>
         	<thead>
 	            <tr>
-	            	<th colspan="5" class="title"><em>Order Items</em></th>
+	            	<th colspan="4" class="title"><em>Order Items</em></th>
 	            </tr>
 	            <tr>
 	            	<th>Product Code</th>
-	                <th>Description</th>
 	                <th>Price</th>
 	                <th>Qty</th>
-	                <th>Total</th>
+	                <th style="text-align:right">Total</th>
 	            </tr>
         	</thead>
 
 	        <tbody>
-	            <?php if(!empty($orderproduct)): foreach($orderproduct as $items):?>
+	            <?php if(!empty($orderproduct)): 
+	            	foreach($orderproduct as $items):?>
 	                <tr>
 		                <td><?php echo $items->product_code; ?></td>
-		                <td><?php echo $items->description; ?></td>
-		                <td><?php echo $items->current_price; ?></td>
+		                <td><?php echo $this->settings->currency; ?> <?php echo number_format($items->current_price, 2, ",", "."); ?></td>
 		                <td><?php echo $items->qty; ?></td>
-		                <td><?php echo $items->sub_total; ?></td>
+		                <td style="text-align:right"><?php echo $this->settings->currency; ?> <?php echo number_format($items->sub_total, 2, ",", "."); ?></td>
 		            </tr>
 				<?php endforeach; endif; ?>	
 					<tr>
-						<td colspan="4" style="text-align:right"><strong>Total Bayar</strong></td>
-	                	<td><strong><?php echo $data->harga;?></strong></td>
+						<td colspan="3"><strong>Total Bayar</strong></td>
+	                	<td style="text-align:right"><strong><?php echo $this->settings->currency; ?> <?php echo number_format($data->harga, 2, ",", "."); ?></strong></td>
 	            	</tr>
 	        </tbody>
     	</table>

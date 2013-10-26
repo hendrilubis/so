@@ -7,13 +7,12 @@
 					<th><?php echo lang('simple_order:status'); ?></th>
 					<th><?php echo lang('simple_order:alamat'); ?></th>
 					<th><?php echo lang('simple_order:total'); ?></th>
-					<th><?php echo lang('simple_order:action'); ?></th>
 					<th></th>
 				</tr>
 			</thead>
 			<tfoot>
 				<tr>
-					<td colspan="7">
+					<td colspan="6">
 						<div class="inner"><?php $this->load->view('admin/partials/pagination'); ?></div>
 					</td>
 				</tr>
@@ -25,7 +24,7 @@
 					<td><?php echo $item["created_by"]["display_name"]; ?></td>
 					<td><?php echo $item["status"]["value"]; ?></td>
 					<td><?php echo $item["alamat_kirim"]; ?></td>
-					<td><?php echo $item["harga"]; ?></td>
+					<td><?php echo $this->settings->currency; ?> <?php echo number_format($item["harga"], 2, ",", "."); ?></td>
 					<td class="actions">
 						<?php echo anchor('admin/so/edit/'.$item["id"], lang('simple_order:edit'), array('class'=>'button', 'title'=>lang('simple_order:edit'))); ?>
 					</td>

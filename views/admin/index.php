@@ -10,8 +10,8 @@
                 <li class="">
                     <label for="f_status">Filter By: </label>
                     <select name="status" id="status">
-                        <option value="paid">Sudah Bayar</option>
                         <option value="Pending">Belum Bayar</option>
+                        <option value="paid">Sudah Bayar</option>
                         <option value="sent">Terkirim</option>
                         <option value="cancel">Batal</option>
                     </select> 
