@@ -14,42 +14,52 @@ class Events_so{
 	public function __construct()
 	{
 		$this->ci =& get_instance();
-		// register the public_controller event when this file is autoloaded
-		Events::register('streams_post_update_entry', array($this, 'run'));
+
+		Events::register('streams_post_update_entry', array($this, 'update'));
 	}
 
-		// this will be triggered by the Events::trigger('public_controller') code in Public_Controller.php
-	public function run($data)
-	{
-		// $data = array(
-		// 	['entry_id'][]
-		// 	['streams']->
-		// 	['entry_data'][]
-		// );
-	
-		// if($data['streams']->stream_slug == 'order'){
-		// 	if($data['entry_data']['view_options']->product_id == ){
-		// 		if($data['entry_data']['status'] == 'paid'){
-		// 			$this->ci->load->driver('Streams');
-		// 			dump($data);
-		// 		}
-		// 	}
-		// }
-					// if($data){
+	public function update($data)
+	{	
+		// untuk update stream order
+		if($data['stream']->stream_slug == 'order'){
 
-					// }
+			// kalo order sudah dibayar
+			if($data['update_data']['status'] == 'paid'){
+
+				// ambil produk trryout apa saja yang dipesan
+				$this->ci->db->load->model('order_m');
+				$tos = $this->ci->order_m->getOrderProduct($data['entry_id'], array('type'=>'tryout'));
+
+				// tambah row di stream to_user
+				$to = array(
+					'user_id' => $data['update_data']['user_id'],
+					'status_pengerjaan' => 'belum',
+					'nilai' => 0,
+					'paket_id'
+				);
+			}
+		}
+// 				if($data['entry_data']['status'] == 'paid'){
+// 					$this->ci->load->driver('Streams');
+// 					dump($data);
+// 				}
+// 			}
+// 		}
+// 				us	if($data){
+
+// 					}
 // cek dulu si user order produk to ga
-				// kalau ternyata order, dicek lagi ngambil paket yang mana
+// 				kalau ternyata order, dicek lagi ngambil paket yang mana
 // mengambil paket yang id produknya yg sama dengan update ini. pake get_entries paket berdasarkan id produk yg dipesan
-				// (loop) simpan paket 3 paket to ke to_user
+// 				(loop) simpan paket 3 paket to ke to_user
 
 
-		// 		$params = array(
+// 				$params = array(
 
-		// 		);
-		// 		$this->ci->streams->entries->insert_entry($params, 'to_user', $data['streams']->stream_namespace);
-		// 	}
-		// }
+// 				);
+// 				$this->ci->streams->entries->insert_entry($params, 'to_user', $data['streams']->stream_namespace);
+// 			}
+// 		}
 	}
 }
 /* End of file events.php */	

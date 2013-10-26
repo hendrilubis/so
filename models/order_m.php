@@ -47,14 +47,18 @@ class Order_m extends My_Model{
 
 	}
 
-	public function getOrderProduct($id_order){
+	public function getOrderProduct($id_order, $where = array()){
 
-		return $this->db->select('so_order_product.*')
-						->select('so_product.*')
-						->from('so_order_product')
-						->join('so_product', 'so_order_product.product_id = so_product.id')
-						->where('so_order_product.row_id', $id_order)
-						->get()->result();
+		$this->db->select('so_order_product.*')
+				->select('so_product.*')
+				->from('so_order_product')
+				->join('so_product', 'so_order_product.product_id = so_product.id')
+				->where('so_order_product.row_id', $id_order);
+		
+		if(!empty($where))
+			$this->db->where($where);
+
+		return $this->db->get()->result();
 	}
 
 	public function insertOrderProduk($order){
