@@ -77,7 +77,7 @@ class Module_So extends Module
 
         /* PRODUCT STREAM =============================== */
         // Create stream
-        $extra = array('title_column' => 'product_code', 'view_options' => array("created_by","product_code","type","harga","harga_promo"), 'sorting' => 'title', 'menu_path' => 'Simple Order / Product', 'is_hidden' => 'no');
+        $extra = array('title_column' => 'product_code', 'view_options' => array("created_by","product_code","type","harga","harga_promo"), 'sorting' => 'title', 'menu_path' => '', 'is_hidden' => 'no');
         if( !$this->streams->streams->add_stream('product', 'product', $namespace, 'so_', 'stream untuk kumpulan produk', $extra) ) return FALSE; 
 
         // Get stream data
@@ -104,7 +104,7 @@ class Module_So extends Module
 
         /* ORDER STREAM */
         // Create stream
-        $extra = array('title_column' => '', 'view_options' => array("created","status","harga"), 'sorting' => 'title', 'menu_path' => 'Simple Order / Order', 'is_hidden' => 'no');
+        $extra = array('title_column' => '', 'view_options' => array("created","status","harga"), 'sorting' => 'title', 'menu_path' => '', 'is_hidden' => 'no');
         if( !$this->streams->streams->add_stream('order', 'order', $namespace, 'so_', 'stream untuk pemesanan produk', $extra) ) return FALSE; 
 
         // Get stream data
@@ -153,7 +153,7 @@ class Module_So extends Module
 
         /* SHIPPING STREAM */
         // Create stream
-        $extra = array('title_column' => 'tujuan', 'view_options' => array("tujuan","harga"), 'sorting' => 'title', 'menu_path' => 'Simple Order / Shipping', 'is_hidden' => 'no');
+        $extra = array('title_column' => 'tujuan', 'view_options' => array("tujuan","harga"), 'sorting' => 'title', 'menu_path' => '', 'is_hidden' => 'no');
         if( !$this->streams->streams->add_stream('Shipping', 'shipping', $namespace, 'so_', 'shipping', $extra) ) return FALSE; 
 
         // Get stream data
