@@ -25,7 +25,7 @@ class So extends Public_Controller {
 	public function index() {
 				$params = array(
 				'stream'		=> 'product',
-				'namespace'		=> 'streams',
+				'namespace'		=> 'product',
 				'paginate' 		=> 'yes',
 				'limit'			=> 10,
 				'page_segment' 	=> 4

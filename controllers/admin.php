@@ -28,7 +28,7 @@ class Admin extends Admin_Controller {
 	public function index() {
 		$params = array(
 				'stream'		=> 'order',
-				'namespace'		=> 'streams',
+				'namespace'		=> 'order',
 				'paginate' 		=> 'yes',
 				'limit'			=> 10,
 				'page_segment' 	=> 4
@@ -51,7 +51,7 @@ class Admin extends Admin_Controller {
 
 		$params = array(
 				'stream'		=> 'order',
-				'namespace'		=> 'streams',
+				'namespace'		=> 'order',
 				'paginate' 		=> 'yes',
 				'limit'			=> 10,
 				'page_segment' 	=> 4,
@@ -81,7 +81,7 @@ class Admin extends Admin_Controller {
 
 		$params = array(
 				'stream' => 'product_order',
-				'namespace' => 'streams',
+				'namespace' => 'product_order',
 				'where' => "order_id = $id"
 			);
 		$order['orderproduct'] = $this->streams->entries->get_entries($params);

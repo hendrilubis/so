@@ -16,7 +16,7 @@
 
 class Module_So extends Module
 {
-    public $version = '1.2';
+    public $version = '1.0.0';
 
     public function info()
     {
@@ -71,11 +71,9 @@ class Module_So extends Module
     public function install()
     {
         $this->load->driver('Streams');
-        // you might want to change the namespace 
-        // to prevent collision with existing streams or fields
-        $namespace = 'streams';
 
         /* PRODUCT STREAM =============================== */
+        $namespace = 'product';
         // Create stream
         $extra = array('title_column' => 'product_code', 'view_options' => array("created_by","product_code","type","harga","harga_promo"), 'sorting' => 'title', 'menu_path' => '', 'is_hidden' => 'no');
         if( !$this->streams->streams->add_stream('product', 'product', $namespace, 'so_', 'stream untuk kumpulan produk', $extra) ) return FALSE; 
@@ -103,6 +101,7 @@ class Module_So extends Module
 
 
         /* ORDER STREAM */
+        $namespace = 'order';
         // Create stream
         $extra = array('title_column' => '', 'view_options' => array("created","status","harga"), 'sorting' => 'title', 'menu_path' => '', 'is_hidden' => 'no');
         if( !$this->streams->streams->add_stream('order', 'order', $namespace, 'so_', 'stream untuk pemesanan produk', $extra) ) return FALSE; 
@@ -127,6 +126,7 @@ class Module_So extends Module
 
 
         /* PRODUCT ORDER STREAM ====================== */
+        $namespace = 'product_order';
         // Create stream
         $extra = array('title_column' => '', 'view_options' => array("created","order_id","produk_id","harga","qty","sub_total"), 'sorting' => 'title', 'menu_path' => '', 'is_hidden' => 'no');
         if( !$this->streams->streams->add_stream('Product Order', 'product_order', $namespace, 'so_', 'Daftar produk yang dipesan di setiap order', $extra) ) return FALSE; 
@@ -152,6 +152,7 @@ class Module_So extends Module
 
 
         /* SHIPPING STREAM */
+        $namespace = 'shipping';
         // Create stream
         $extra = array('title_column' => 'tujuan', 'view_options' => array("tujuan","harga"), 'sorting' => 'title', 'menu_path' => '', 'is_hidden' => 'no');
         if( !$this->streams->streams->add_stream('Shipping', 'shipping', $namespace, 'so_', 'shipping', $extra) ) return FALSE; 
@@ -174,6 +175,7 @@ class Module_So extends Module
 
 
         /* TRYOUT_ORDER STREAM */
+        $namespace = 'to_order';
         // Create stream
         $extra = array('title_column' => 'produk_id', 'view_options' => array("created","produk_id","order_id","email","generated_key"), 'sorting' => 'title', 'menu_path' => '', 'is_hidden' => 'no');
         if( !$this->streams->streams->add_stream('TO Order', 'to_order', $namespace, 'so_', 'Stream yang menyimpan data order tryout untuk setiap pemesan paket try out. Satu baris untuk satu order try out', $extra) ) return FALSE; 
@@ -209,11 +211,8 @@ class Module_So extends Module
     {
         $this->load->driver('Streams');
 
-        // you might want to change the namespace 
-        // to prevent collision with existing streams or fields
-        $namespace = 'streams';
-
         // PRODUCT STREAM
+        $namespace = 'product';
         $this->streams->streams->delete_stream('product', $namespace);
 
         $this->streams->fields->delete_field('product_code', $namespace);
@@ -225,6 +224,7 @@ class Module_So extends Module
         $this->streams->fields->delete_field('harga_kolektif', $namespace);
 
         // ORDER STREAM
+        $namespace = 'order';
         $this->streams->streams->delete_stream('order', $namespace);
 
         $this->streams->fields->delete_field('user_id', $namespace);
@@ -233,6 +233,7 @@ class Module_So extends Module
         $this->streams->fields->delete_field('harga', $namespace);
 
         // PRODUCT ORDER STREAM
+        $namespace = 'product_order';
         $this->streams->streams->delete_stream('product_order', $namespace);
 
         $this->streams->fields->delete_field('order_id', $namespace);
@@ -242,12 +243,14 @@ class Module_So extends Module
         $this->streams->fields->delete_field('sub_total', $namespace);
 
         // SHIPPING STREAM
+        $namespace = 'shipping';
         $this->streams->streams->delete_stream('shipping', $namespace);
 
         $this->streams->fields->delete_field('tujuan', $namespace);
         $this->streams->fields->delete_field('harga', $namespace);
 
         // TRYOUT ORDER STREAM
+        $namespace = 'to_order';
         $this->streams->streams->delete_stream('to_order', $namespace);
 
         $this->streams->fields->delete_field('produk_id', $namespace);

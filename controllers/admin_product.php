@@ -48,7 +48,7 @@ class Admin_product extends Admin_Controller{
         // signals the function to use the template library to build the page
         // so we don't have to. If we had that set to false, the function
         // would return a string with just the form.
-        $this->streams->cp->entries_table('product', 'streams', 10, 'so/admin_product/index', true, $extra);
+        $this->streams->cp->entries_table('product', 'product', 10, 'so/admin_product/index', true, $extra);
     }
 
     public function create(){
@@ -62,7 +62,7 @@ class Admin_product extends Admin_Controller{
 
 
 
-        $this->streams->cp->entry_form('product', 'streams', 'new', null, true, $extra);
+        $this->streams->cp->entry_form('product', 'product', 'new', null, true, $extra);
 
     }
 
@@ -75,11 +75,11 @@ class Admin_product extends Admin_Controller{
             'title' => lang('simple_order:product_edit')
         );
 
-        $this->streams->cp->entry_form('product', 'streams', 'edit', $id, true, $extra);
+        $this->streams->cp->entry_form('product', 'product', 'edit', $id, true, $extra);
     }
 
     public function delete($id = 0){
-        $this->streams->entries->delete_entry($id, 'product', 'streams');
+        $this->streams->entries->delete_entry($id, 'product', 'product');
         $this->session->set_flashdata('success', lang('simple_order:product_delete'));
  
         redirect('so/admin_product/index');

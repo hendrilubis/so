@@ -37,7 +37,7 @@ class Admin_area extends Admin_Controller {
             )
             
         );
-        $this->streams->cp->entries_table('shipping', 'streams', 5, 'admin/so/area', true, $extra);
+        $this->streams->cp->entries_table('shipping', 'shipping', 5, 'admin/so/area', true, $extra);
 	}
 
 	public function create()
@@ -49,7 +49,7 @@ class Admin_area extends Admin_Controller {
             'title' => 'lang:simple_order:new_area',
          );
 
-        $this->streams->cp->entry_form('shipping', 'streams', 'new', null, true, $extra);
+        $this->streams->cp->entry_form('shipping', 'shipping', 'new', null, true, $extra);
 	}
 
 	public function edit($id = 0)
@@ -61,12 +61,12 @@ class Admin_area extends Admin_Controller {
             'title' => 'lang:simple_order:edit_area',
          );
 
-        $this->streams->cp->entry_form('shipping', 'streams', 'edit', $id, true, $extra);
+        $this->streams->cp->entry_form('shipping', 'shipping', 'edit', $id, true, $extra);
     }
 
     public function delete($id = false)
     {
-    	$this->streams->entries->delete_entry($id, 'shipping', 'streams');
+    	$this->streams->entries->delete_entry($id, 'shipping', 'shipping');
     	$this->session->set_flashdata('success', lang('simple_order:delete_success'));
     	redirect('admin/so/area');
     }
