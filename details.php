@@ -86,7 +86,7 @@ class Module_So extends Module
         $template = array('namespace' => $namespace, 'assign' => 'product');
 
         $fields[] = array('name'=>'Product Code', 'slug'=>'product_code', 'type'=>'text', 'required' => 'no', 'unique' => 'yes', 'instructions' => '', 'extra'=>array("max_length"=>"", "default_value"=>""));
-        $fields[] = array('name'=>'type', 'slug'=>'type', 'type'=>'choice', 'required' => 'yes', 'unique' => 'no', 'instructions' => 'Pilih type product', 'extra'=>array("choice_data"=>"digital => Digital\r\nfisik => Fisik\r\ntryout  => Tryout", "choice_type"=>"dropdown", "default_value"=>"", "min_choices"=>"", "max_choices"=>""));
+        $fields[] = array('name'=>'type', 'slug'=>'type', 'type'=>'choice', 'required' => 'yes', 'unique' => 'no', 'instructions' => 'Pilih type product', 'extra'=>array("choice_data"=>"digital : Digital\nfisik : Fisik\ntryout  : Tryout", "choice_type"=>"dropdown", "default_value"=>"", "min_choices"=>"", "max_choices"=>""));
         $fields[] = array('name'=>'Harga', 'slug'=>'harga', 'type'=>'integer', 'required' => 'yes', 'unique' => 'no', 'instructions' => 'Isi Harga Product', 'extra'=>array("max_length"=>"255", "default_value"=>""));
         $fields[] = array('name'=>'Harga Promo', 'slug'=>'harga_promo', 'type'=>'integer', 'required' => 'no', 'unique' => 'no', 'instructions' => 'Isi harga promo', 'extra'=>array("max_length"=>"255", "default_value"=>""));
         $fields[] = array('name'=>'Deadline Promo', 'slug'=>'deadline_promo', 'type'=>'datetime', 'required' => 'no', 'unique' => 'no', 'instructions' => '', 'extra'=>array("use_time"=>"yes", "start_date"=>"", "end_date"=>"", "storage"=>"datetime", "input_type"=>"datepicker"));
@@ -114,7 +114,7 @@ class Module_So extends Module
         $template = array('namespace' => $namespace, 'assign' => 'order');
 
         $fields[] = array('name'=>'user', 'slug'=>'user_id', 'type'=>'relationship', 'required' => 'yes', 'unique' => 'no', 'instructions' => '', 'extra'=>array("choose_stream"=>"3", "link_uri"=>null));
-        $fields[] = array('name'=>'status', 'slug'=>'status', 'type'=>'choice', 'required' => 'yes', 'unique' => 'no', 'instructions' => 'Pilih Status Pengiriman Product', 'extra'=>array("choice_data"=>"pending => Belum Bayar\npaid => Sudah Bayar\nsent => Terkirim\ncancel => Batal", "choice_type"=>"dropdown", "default_value"=>"pending", "min_choices"=>"", "max_choices"=>""));
+        $fields[] = array('name'=>'status', 'slug'=>'status', 'type'=>'choice', 'required' => 'yes', 'unique' => 'no', 'instructions' => 'Pilih Status Pengiriman Product', 'extra'=>array("choice_data"=>"pending : Belum Bayar\npaid : Sudah Bayar\nsent : Terkirim\ncancel : Batal", "choice_type"=>"dropdown", "default_value"=>"pending", "min_choices"=>"", "max_choices"=>""));
         $fields[] = array('name'=>'Alamat Kirim', 'slug'=>'alamat_kirim', 'type'=>'text', 'required' => 'no', 'unique' => 'no', 'instructions' => 'Isikan alamat untuk buku dikirimkan', 'extra'=>array("max_length"=>"255", "default_value"=>""));
         $fields[] = array('name'=>'Harga', 'slug'=>'harga', 'type'=>'integer', 'required' => 'yes', 'unique' => 'no', 'instructions' => 'Total Harga', 'extra'=>array("max_length"=>"255", "default_value"=>""));
 
