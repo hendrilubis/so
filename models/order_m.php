@@ -64,7 +64,7 @@ class Order_m extends My_Model{
 	public function insertOrderProduk($order){
 
 		if(is_array($order) && !empty($order)) {
-            $this->db->insert('so_order_product',$order);
+            $this->db->insert('so_product_order',$order);
         }
 
 	}
