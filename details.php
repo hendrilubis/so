@@ -45,6 +45,17 @@ class Module_So extends Module
                             'class' => 'add'
                             )
                         )
+                ),
+                'area' => array(
+                    'name' => 'Area',
+                    'uri' => 'admin/so/area',
+                    'shortcuts' => array(
+                        'create' => array(
+                            'name' => 'simple_order:new_area',
+                            'uri' => 'admin/so/area/create',
+                            'class' => 'add'
+                            )
+                        )
                 )
 
             )

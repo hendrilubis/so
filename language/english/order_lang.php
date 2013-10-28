@@ -21,5 +21,8 @@ $lang['simple_order:new']			= 'Add New Product';
 $lang['simple_order:product_list']			= 'Product List';
 $lang['simple_order:product_edit']			= 'Edit Product';
 $lang['simple_order:product_delete']			= 'Product Berhasil di Hapus';
+$lang['simple_order:new_area']			= 'Add New Area';
+$lang['simple_order:edit_area']			= 'Edit Area';
+$lang['simple_order:delete_success']	= 'Item berhasil dihapus.';
 
 ?>
