@@ -11,6 +11,7 @@
 
 
 class Admin_orderto extends Admin_Controller {
+
 	protected $section = 'order_to';
 
 	public function __construct() {
@@ -71,27 +72,26 @@ class Admin_orderto extends Admin_Controller {
 
 	}
 
-	// public function edit($id = 0) {
+	public function edit($id = 0) {
 
-	// 	$extra = array(
- //            'return' => 'so/admin_orderto',
- //            'success_message' => lang('simple_order:success_message'),
- //            'failure_message' => lang('simple_order:failure_message'),
- //            'title' => anchor('so/admin_orderto/edit/'.$id, 'Order').' &raquo; '.lang('simple_order:edit')
- //        );
+		$extra = array(
+            'return' => 'so/admin_orderto',
+            'success_message' => lang('simple_order:success_message'),
+            'failure_message' => lang('simple_order:failure_message'),
+            'title' => anchor('so/admin_orderto/edit/'.$id, 'Order').' &raquo; '.lang('simple_order:edit')
+        );
 
- //        $skips = array('allow_comment', 'trashed');
- //        $hidden = array( 'user_id', 'harga');
+        $skips = array('paket_id', 'user_id', 'nilai', 'jam_mulai', 'jam_selesai');
 
- //        $this->streams->cp->entry_form('to_user', 'streams', 'edit', $id, true, $extra, $skips, false, $hidden);
+        $this->streams->cp->entry_form('to_user', 'streams', 'edit', $id, true, $extra, $skips);
 
-	// }
+	}
 
-	// public function update($id, $update){
-	// 	$entry_data = array(
- //        	'status'    => $update
- //   		);
+	public function update($id, $update){
+		$entry_data = array(
+        	'status'    => $update
+   		);
 		
-	// 	$this->streams->entries->update_entry($id, $entry_data, 'to_user', 'streams');
-	// }
+		$this->streams->entries->update_entry($id, $entry_data, 'to_user', 'streams');
+	}
 }

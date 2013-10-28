@@ -12,7 +12,7 @@
 			</thead>
 			<tfoot>
 				<tr>
-					<td colspan="7">
+					<td colspan="6">
 						<div class="inner"><?php $this->load->view('admin/partials/pagination'); ?></div>
 					</td>
 				</tr>
@@ -26,9 +26,9 @@
 					<td><?php echo $item["status_pengerjaan"]["value"]; ?></td>
 					<td><?php echo $item["nilai"]; ?></td>
 					<td><?php echo $item["paket_id"]["judul"]; ?></td>
-					<!-- <td class="actions">
+					<td class="actions">
 						<?php echo anchor('so/admin_orderto/edit/'.$item["id"], lang('simple_order:edit'), array('class'=>'button', 'title'=>lang('simple_order:edit'))); ?>
-					</td> -->
+					</td>
 				</tr>
 				<?php $i++; endforeach; else: ?> <div class="no_data"><?php echo lang('simple_order:no_items'); ?></div> <?php  endif; ?>
 			</tbody>
