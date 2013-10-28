@@ -35,10 +35,6 @@ class Module_So extends Module
                     'name' => 'Product Order',
                     'uri' => 'admin/so',
                 ),
-                'order_to' => array(
-                    'name' => 'Try Out Order',
-                    'uri' => 'so/admin_orderto',
-                ),
                 'product' => array(
                     'name' => 'Product List',
                     'uri' => 'so/admin_product',
