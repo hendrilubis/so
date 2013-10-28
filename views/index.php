@@ -322,25 +322,6 @@
 
                 // step konfirmasi
                 if (currentIndex === 3 && priorIndex === 2){
-                    // menampilkan data produk yang disimpan di cookie
-                    var order = JSON.parse($.cookie('products'));
-                    console.log(order);
-                    var hargaTotal = 0;
-                    var biayaKirim = 0;
-                    $('#data-produk').empty();
-                    for(var i=0; i < order.length; i++){
-                        if(order[i].product_qty > 0){
-                            if($fisik_qty >= 1){
-                                biayaKirim = $fisik_qty * 10000;
-                            }
-                            
-                            var totalbiaya = order[i].product_harga * order[i].product_qty;
-                            hargaTotal += totalbiaya;
-
-                            $('#data-produk').append('<tr><td>' + order[i].product_name + '</td><td>' + order[i].product_harga + '</td><td>' + order[i].product_qty + '</td><td>' + totalbiaya + '</td></tr>');
-                        }
-                    }
-
                     /* menampilkan data diri yang disimpan di cookie */
                     var dataDiri = JSON.parse($.cookie('ddata'));
                     console.log(dataDiri);
@@ -362,14 +343,29 @@
                         $('.alamat-sekolah').empty();
                         $('.alamat-sekolah').append(dataDiri.alamatSekolah);
 
-                        /* akhir dari menampilkan data diri */                    
-                    // cek jika produk yg dipesan adalah produk fisik maka + 10000
-                    if($fisik_qty >= 1){
-                        hargaTotal += parseInt(dataDiri.wilayah) * $fisik_qty;
+                        /* akhir dari menampilkan data diri */ 
+
+                    // menampilkan data produk yang disimpan di cookie
+                    var order = JSON.parse($.cookie('products'));
+                    console.log(order);
+                    var hargaTotal = 0;
+                    var biayaKirim = 0;
+                    $('#data-produk').empty();
+                    for(var i=0; i < order.length; i++){
+                        if(order[i].product_qty > 0){
+                            if(order[i].product_type == 'fisik'){
+                                hargaProduk = parseInt(order[i].product_harga) +  parseInt(dataDiri.wilayah);
+                            }else{
+                                hargaProduk = order[i].product_harga;
+                            }
+                            var totalbiaya = hargaProduk * order[i].product_qty;
+                            hargaTotal += totalbiaya;
+
+                            $('#data-produk').append('<tr><td>' + order[i].product_name + '</td><td>' + hargaProduk + '</td><td>' + order[i].product_qty + '</td><td>' + totalbiaya + '</td></tr>');
+                        }
                     }
+                    
                     console.log(hargaTotal);
-                    $('#biaya-kirim').empty();
-                    $('#biaya-kirim').append('<tr><td colspan="3">Biaya Kirim Luar Jabodetabek</td><td>' + biayaKirim + '</td>');
                     $('#total-harga').empty();
                     $('#total-harga').append('<tr><td colspan="3"><b>Total Bayar</b></td><td>' + hargaTotal + '</td>');
                     

@@ -18,6 +18,7 @@ class So extends Public_Controller {
 		$this->template->append_js('module::kampret.js');
 		$this->template->append_js('module::jquery.cookie-1.4.0.js');
 		$this->load->model('order_m');
+		$this->load->helper('string');
 		// $this->template->append_js('module::jquery.steps.min.js');
 	}
 
@@ -43,8 +44,16 @@ class So extends Public_Controller {
 			$data['dataproduk'] = json_decode($this->input->post('pdata'));
 			$data['dataemail'] = json_decode($this->input->post('edata'));
 
-			// ambil data user id yang sedang login
-			$userId = $this->current_user->id;
+			//meregistrasikan email user
+			$username = str_replace("@", "-", $data['datadiri']->emailPrimer);
+			$password = random_string("alnum", 11);
+			$additional_data = array(
+									'display_name' => "Nama Anda",
+									'first_name' => "Nama",
+									'last_name' => "Anda"
+									);
+			$userId = $this->ion_auth->register($username, $password, $data['datadiri']->emailPrimer, null, $additional_data, 'user');
+
 			// perhitungan harga
 
 			$produk = array();
@@ -87,7 +96,23 @@ class So extends Public_Controller {
 						'harga' => $total
 						);
 
-			// $order_id = $this->streams->entries->insert_entry($order, 'order', 'streams');
+			$order_id = $this->streams->entries->insert_entry($order, 'order', 'streams');
+
+			
+
+			foreach($data['dataemail'] as $email){
+					// daftarkan email pesanan produk menjadi user register
+					if($email != $data['datadiri']->emailPrimer){
+						$username = str_replace("@", "-", $email);
+						$password = random_string("alnum", 11);
+						$additional_data = array(
+												'display_name' => "Nama Anda",
+												'first_name' => "Nama",
+												'last_name' => "Anda"
+												);
+						$this->ion_auth->register($username, $password, $email, null, $additional_data, 'user');
+					}
+				}
 
 
 			foreach ($produk as $items){
@@ -97,39 +122,30 @@ class So extends Public_Controller {
 				$currentPrice = 0;
 
 					if($tglSekarang <= $tglPromo){
-						$currentPrice = $getdataproduct->harga_promo;
+						if($items->product_type == 'fisik'){
+							$currentPrice = $items->product_qty * ($getdataproduct->harga_promo + $data['datadiri']->wilayah);
+						}else{
+							$currentPrice = $items->product_qty * $getdataproduct->harga_promo;
+						}
 					}else{
-						$currentPrice = $getdataproduct->harga;
+						if($items->product_type == 'fisik'){
+							$currentPrice = $items->product_qty * ($getdataproduct->harga + $data['datadiri']->wilayah) ;
+						}else{
+							$currentPrice = $items->product_qty * $getdataproduct->harga;
+						}
 					}
 
 					$subTotal = $currentPrice * $items->product_qty;
 
 					$orderProduk = array(
-									// 'row_id' => $order_id,
-									'order_id' => 8,
-									'product_id' => $items->product_id,
-									'current_price' => $currentPrice,
+									'order_id' => $order_id,
+									'produk_id' => $items->product_id,
+									'harga' => $currentPrice,
 									'qty' => $items->product_qty,
 									'sub_total' => $subTotal
 								);
-
-					// $this->order_m->insertOrderProduk($orderProduk);
+					$this->streams->entries->insert_entry($orderProduk, 'product_order', 'streams');
 			}
-				
-				$i=1; 
-				foreach($data['dataemail'] as $email){
-					// daftarkan email pesanan produk menjadi user register
-					$username = 'username'.$i;
-					$password = 'kehed';
-					$additional_data = array(
-											'display_name' => "No Name",
-											'first_name' => "first",
-											'last_name' => "last"
-											);
-					$this->ion_auth->register($username, $password, $email, null, $additional_data, 'user');
-					$i++;
-					// data kedua email sudah masuk kedatabase tapi pas di profile cuma 1 data yg masuk
-				}
 
 			// print_r($userId);
 
