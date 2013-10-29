@@ -207,9 +207,6 @@
         function errorPlacement(error, element){
                 element.before(error);
             }
-        // function isNumber (o) {
-        //     return ! isNaN (o-0) && o !== null && o !== "" && o !== false;
-        // }
 
         $('#pesan').validate({
             // errorPlacement: errorPlacement;
