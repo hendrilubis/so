@@ -85,13 +85,13 @@ class Module_So extends Module
         $fields   = array();
         $template = array('namespace' => $namespace, 'assign' => 'product');
 
-        $fields[] = array('name'=>'Product Code', 'slug'=>'product_code', 'type'=>'text', 'required' => 'no', 'unique' => 'yes', 'instructions' => '', 'extra'=>array("max_length"=>"", "default_value"=>""));
-        $fields[] = array('name'=>'type', 'slug'=>'type', 'type'=>'choice', 'required' => 'yes', 'unique' => 'no', 'instructions' => 'Pilih type product', 'extra'=>array("choice_data"=>"digital : Digital\nfisik : Fisik\ntryout  : Tryout", "choice_type"=>"dropdown", "default_value"=>"", "min_choices"=>"", "max_choices"=>""));
-        $fields[] = array('name'=>'Harga', 'slug'=>'harga', 'type'=>'integer', 'required' => 'yes', 'unique' => 'no', 'instructions' => 'Isi Harga Product', 'extra'=>array("max_length"=>"255", "default_value"=>""));
-        $fields[] = array('name'=>'Harga Promo', 'slug'=>'harga_promo', 'type'=>'integer', 'required' => 'no', 'unique' => 'no', 'instructions' => 'Isi harga promo', 'extra'=>array("max_length"=>"255", "default_value"=>""));
-        $fields[] = array('name'=>'Deadline Promo', 'slug'=>'deadline_promo', 'type'=>'datetime', 'required' => 'no', 'unique' => 'no', 'instructions' => '', 'extra'=>array("use_time"=>"yes", "start_date"=>"", "end_date"=>"", "storage"=>"datetime", "input_type"=>"datepicker"));
-        $fields[] = array('name'=>'description', 'slug'=>'description', 'type'=>'textarea', 'required' => 'no', 'unique' => 'no', 'instructions' => '', 'extra'=>array("default_text"=>"", "allow_tags"=>"n", "content_type"=>"text"));
-        $fields[] = array('name'=>'Harga Kolektif', 'slug'=>'harga_kolektif', 'type'=>'integer', 'required' => 'no', 'unique' => 'no', 'instructions' => '', 'extra'=>array("max_length"=>"20", "default_value"=>"0"));
+        $fields[] = array('name'=>'Product Code', 'slug'=>'product_code', 'type'=>'text', 'required' => false, 'unique' => true, 'instructions' => '', 'extra'=>array("max_length"=>"", "default_value"=>""));
+        $fields[] = array('name'=>'type', 'slug'=>'type', 'type'=>'choice', 'required' => true, 'unique' => false, 'instructions' => 'Pilih type product', 'extra'=>array("choice_data"=>"digital : Digital\nfisik : Fisik\ntryout  : Tryout", "choice_type"=>"dropdown", "default_value"=>"", "min_choices"=>"", "max_choices"=>""));
+        $fields[] = array('name'=>'Harga', 'slug'=>'harga', 'type'=>'integer', 'required' => true, 'unique' => false, 'instructions' => 'Isi Harga Product', 'extra'=>array("max_length"=>"255", "default_value"=>""));
+        $fields[] = array('name'=>'Harga Promo', 'slug'=>'harga_promo', 'type'=>'integer', 'required' => false, 'unique' => false, 'instructions' => 'Isi harga promo', 'extra'=>array("max_length"=>"255", "default_value"=>""));
+        $fields[] = array('name'=>'Deadline Promo', 'slug'=>'deadline_promo', 'type'=>'datetime', 'required' => false, 'unique' => false, 'instructions' => '', 'extra'=>array("use_time"=>"yes", "start_date"=>"", "end_date"=>"", "storage"=>"datetime", "input_type"=>"datepicker"));
+        $fields[] = array('name'=>'description', 'slug'=>'description', 'type'=>'textarea', 'required' => false, 'unique' => false, 'instructions' => '', 'extra'=>array("default_text"=>"", "allow_tags"=>"n", "content_type"=>"text"));
+        $fields[] = array('name'=>'Harga Kolektif', 'slug'=>'harga_kolektif', 'type'=>'integer', 'required' => false, 'unique' => false, 'instructions' => '', 'extra'=>array("max_length"=>"20", "default_value"=>"0"));
 
         // Combine
         foreach ($fields AS &$field) { $field = array_merge($template, $field); }
@@ -113,10 +113,10 @@ class Module_So extends Module
         $fields   = array();
         $template = array('namespace' => $namespace, 'assign' => 'order');
 
-        $fields[] = array('name'=>'user', 'slug'=>'user_id', 'type'=>'relationship', 'required' => 'yes', 'unique' => 'no', 'instructions' => '', 'extra'=>array("choose_stream"=>"3", "link_uri"=>null));
-        $fields[] = array('name'=>'status', 'slug'=>'status', 'type'=>'choice', 'required' => 'yes', 'unique' => 'no', 'instructions' => 'Pilih Status Pengiriman Product', 'extra'=>array("choice_data"=>"pending : Belum Bayar\npaid : Sudah Bayar\nsent : Terkirim\ncancel : Batal", "choice_type"=>"dropdown", "default_value"=>"pending", "min_choices"=>"", "max_choices"=>""));
-        $fields[] = array('name'=>'Alamat Kirim', 'slug'=>'alamat_kirim', 'type'=>'text', 'required' => 'no', 'unique' => 'no', 'instructions' => 'Isikan alamat untuk buku dikirimkan', 'extra'=>array("max_length"=>"255", "default_value"=>""));
-        $fields[] = array('name'=>'Harga', 'slug'=>'harga', 'type'=>'integer', 'required' => 'yes', 'unique' => 'no', 'instructions' => 'Total Harga', 'extra'=>array("max_length"=>"255", "default_value"=>""));
+        $fields[] = array('name'=>'user', 'slug'=>'user_id', 'type'=>'relationship', 'required' => true, 'unique' => false, 'instructions' => '', 'extra'=>array("choose_stream"=>"3", "link_uri"=>null));
+        $fields[] = array('name'=>'status', 'slug'=>'status', 'type'=>'choice', 'required' => true, 'unique' => false, 'instructions' => 'Pilih Status Pengiriman Product', 'extra'=>array("choice_data"=>"pending : Belum Bayar\npaid : Sudah Bayar\nsent : Terkirim\ncancel : Batal", "choice_type"=>"dropdown", "default_value"=>"pending", "min_choices"=>"", "max_choices"=>""));
+        $fields[] = array('name'=>'Alamat Kirim', 'slug'=>'alamat_kirim', 'type'=>'text', 'required' => false, 'unique' => false, 'instructions' => 'Isikan alamat untuk buku dikirimkan', 'extra'=>array("max_length"=>"255", "default_value"=>""));
+        $fields[] = array('name'=>'Harga', 'slug'=>'harga', 'type'=>'integer', 'required' => true, 'unique' => false, 'instructions' => 'Total Harga', 'extra'=>array("max_length"=>"255", "default_value"=>""));
 
         // Combine
         foreach ($fields AS &$field) { $field = array_merge($template, $field); }
@@ -138,11 +138,11 @@ class Module_So extends Module
         $fields   = array();
         $template = array('namespace' => $namespace, 'assign' => 'product_order');
 
-        $fields[] = array('name'=>'Order ID', 'slug'=>'order_id', 'type'=>'relationship', 'required' => 'yes', 'unique' => 'no', 'instructions' => '', 'extra'=>array("choose_stream"=>"34", "link_uri"=>null));
-        $fields[] = array('name'=>'Produk Id', 'slug'=>'produk_id', 'type'=>'relationship', 'required' => 'yes', 'unique' => 'no', 'instructions' => '', 'extra'=>array("choose_stream"=>"31", "link_uri"=>null));
-        $fields[] = array('name'=>'Harga', 'slug'=>'harga', 'type'=>'integer', 'required' => 'yes', 'unique' => 'no', 'instructions' => 'Harga produk pada saat dipesan', 'extra'=>array("max_length"=>"255", "default_value"=>""));
-        $fields[] = array('name'=>'Quantity', 'slug'=>'qty', 'type'=>'integer', 'required' => 'no', 'unique' => 'no', 'instructions' => '', 'extra'=>array("max_length"=>"", "default_value"=>"0"));
-        $fields[] = array('name'=>'Sub Total', 'slug'=>'sub_total', 'type'=>'integer', 'required' => 'yes', 'unique' => 'no', 'instructions' => 'harga produk saat dipesan dikali kuantiti', 'extra'=>array("max_length"=>"", "default_value"=>"0"));
+        $fields[] = array('name'=>'Order ID', 'slug'=>'order_id', 'type'=>'relationship', 'required' => true, 'unique' => false, 'instructions' => '', 'extra'=>array("choose_stream"=>"34", "link_uri"=>null));
+        $fields[] = array('name'=>'Produk Id', 'slug'=>'produk_id', 'type'=>'relationship', 'required' => true, 'unique' => false, 'instructions' => '', 'extra'=>array("choose_stream"=>"31", "link_uri"=>null));
+        $fields[] = array('name'=>'Harga', 'slug'=>'harga', 'type'=>'integer', 'required' => true, 'unique' => false, 'instructions' => 'Harga produk pada saat dipesan', 'extra'=>array("max_length"=>"255", "default_value"=>""));
+        $fields[] = array('name'=>'Quantity', 'slug'=>'qty', 'type'=>'integer', 'required' => false, 'unique' => false, 'instructions' => '', 'extra'=>array("max_length"=>"", "default_value"=>"0"));
+        $fields[] = array('name'=>'Sub Total', 'slug'=>'sub_total', 'type'=>'integer', 'required' => true, 'unique' => false, 'instructions' => 'harga produk saat dipesan dikali kuantiti', 'extra'=>array("max_length"=>"", "default_value"=>"0"));
 
         // Combine
         foreach ($fields AS &$field) { $field = array_merge($template, $field); }
@@ -164,8 +164,8 @@ class Module_So extends Module
         $fields   = array();
         $template = array('namespace' => $namespace, 'assign' => 'shipping');
 
-        $fields[] = array('name'=>'Kota Tujuan', 'slug'=>'tujuan', 'type'=>'text', 'required' => 'yes', 'unique' => 'yes', 'instructions' => 'Kota/area tujuan pengiriman', 'extra'=>array("max_length"=>"255", "default_value"=>""));
-        $fields[] = array('name'=>'Harga', 'slug'=>'harga', 'type'=>'integer', 'required' => 'yes', 'unique' => 'no', 'instructions' => 'Biaya tambahan pengiriman', 'extra'=>array("max_length"=>"255", "default_value"=>""));
+        $fields[] = array('name'=>'Kota Tujuan', 'slug'=>'tujuan', 'type'=>'text', 'required' => true, 'unique' => true, 'instructions' => 'Kota/area tujuan pengiriman', 'extra'=>array("max_length"=>"255", "default_value"=>""));
+        $fields[] = array('name'=>'Harga', 'slug'=>'harga', 'type'=>'integer', 'required' => true, 'unique' => false, 'instructions' => 'Biaya tambahan pengiriman', 'extra'=>array("max_length"=>"255", "default_value"=>""));
 
         // Combine
         foreach ($fields AS &$field) { $field = array_merge($template, $field); }
@@ -187,10 +187,10 @@ class Module_So extends Module
         $fields   = array();
         $template = array('namespace' => $namespace, 'assign' => 'to_order');
 
-        $fields[] = array('name'=>'Produk Id', 'slug'=>'produk_id', 'type'=>'relationship', 'required' => 'yes', 'unique' => 'no', 'instructions' => 'Produk bertipe try out', 'extra'=>array("choose_stream"=>"31", "link_uri"=>null));
-        $fields[] = array('name'=>'Order ID', 'slug'=>'order_id', 'type'=>'relationship', 'required' => 'yes', 'unique' => 'no', 'instructions' => 'Id pesanan', 'extra'=>array("choose_stream"=>"34", "link_uri"=>null));
-        $fields[] = array('name'=>'Email', 'slug'=>'email', 'type'=>'email', 'required' => 'yes', 'unique' => 'yes', 'instructions' => 'Email user yang memesan untuk nantinya diregistrasikan sebagai user setelah bayar pemesanan', 'extra'=>false);
-        $fields[] = array('name'=>'Generated Key', 'slug'=>'generated_key', 'type'=>'text', 'required' => 'yes', 'unique' => 'yes', 'instructions' => 'Kode yang digenerate buat password user try out', 'extra'=>array("max_length"=>"20", "default_value"=>""));
+        $fields[] = array('name'=>'Produk Id', 'slug'=>'produk_id', 'type'=>'relationship', 'required' => true, 'unique' => false, 'instructions' => 'Produk bertipe try out', 'extra'=>array("choose_stream"=>"31", "link_uri"=>null));
+        $fields[] = array('name'=>'Order ID', 'slug'=>'order_id', 'type'=>'relationship', 'required' => true, 'unique' => false, 'instructions' => 'Id pesanan', 'extra'=>array("choose_stream"=>"34", "link_uri"=>null));
+        $fields[] = array('name'=>'Email', 'slug'=>'email', 'type'=>'email', 'required' => true, 'unique' => true, 'instructions' => 'Email user yang memesan untuk nantinya diregistrasikan sebagai user setelah bayar pemesanan', 'extra'=>false);
+        $fields[] = array('name'=>'Generated Key', 'slug'=>'generated_key', 'type'=>'text', 'required' => true, 'unique' => true, 'instructions' => 'Kode yang digenerate buat password user try out', 'extra'=>array("max_length"=>"20", "default_value"=>""));
 
         // Combine
         foreach ($fields AS &$field) { $field = array_merge($template, $field); }

@@ -44,112 +44,123 @@ class So extends Public_Controller {
 			$data['dataproduk'] = json_decode($this->input->post('pdata'));
 			$data['dataemail'] = json_decode($this->input->post('edata'));
 
-			//meregistrasikan email user
-			$username = str_replace("@", "-", $data['datadiri']->emailPrimer);
-			$password = random_string("alnum", 11);
-			$additional_data = array(
-									'display_name' => "Nama Anda",
-									'first_name' => "Nama",
-									'last_name' => "Anda"
-									);
-			$userId = $this->ion_auth->register($username, $password, $data['datadiri']->emailPrimer, null, $additional_data, 'user');
+			print_r($data['datadiri']);
+			print_r($data['dataproduk']);
+			print_r($data['dataemail']);
 
-			// perhitungan harga
 
-			$produk = array();
-			$total = 0;
+			// //meregistrasikan email user
+			// $username = str_replace("@", "-", $data['datadiri']->emailPrimer);
+			// $password = random_string("alnum", 11);
+			// $additional_data = array(
+			// 						'first_name' => $data['datadiri']->namaDepan,
+			// 						'last_name' => $data['datadiri']->namaBelakang,
+			// 						'display_name' => $data['datadiri']->namaDepan.' '.$data['datadiri']->namaBelakang,
+			// 						// tambahan field
+			// 						'alamat' => $data['datadiri']->alamat,
+			// 						'wilayah' => $data['datadiri']->wil,
+			// 						'sekolah' => $data['datadiri']->sekolah,
+			// 						'provinsi' => $data['datadiri']->provinsi,
+			// 						'alamat_sekolah' => $data['datadiri']->alamatSekolah,
+			// 						);
+			// $userId = $this->ion_auth->register($username, $password, $data['datadiri']->emailPrimer, null, $additional_data, 'user');
 
-			/* Logic untuk menghitung total biaya */
-			foreach ($data['dataproduk'] as $value) {
-					if($value->product_qty > 0){
-						$get_dataP = $this->order_m->get_product($value->product_id);
-						$produk[] = $value;
-						$tglSekarang = date('Y-m-d');
-						$tglPromo = date('Y-m-d', strtotime($get_dataP->deadline_promo));
-						$price = 0;
+			// // perhitungan harga
 
-						// cek jika tanggal sekarang apakah ada promo
-						if($tglSekarang <= $tglPromo){
-							// cek jika product typenya fisik maka harus ditambahkan biaya						
-								if($value->product_type == "fisik"){
-									$total += $value->product_qty * ($get_dataP->harga_promo + $data['datadiri']->wilayah);
-								}else{
-									$total += $value->product_qty * $get_dataP->harga_promo;
-								}
-						}
-						else{
-							// cek jika product typenya fisik maka harus ditambahkan biaya
-								if($value->product_type == "fisik"){
-									$total += $value->product_qty * ($get_dataP->harga + $data['datadiri']->wilayah);
-								}else{
-									$total += $value->product_qty * $get_dataP->harga;
-								}
-						}
-					}
-			}
+			// $produk = array();
+			// $total = 0;
 
-			// // menyusun data dr data yg telah dilempar dari ajax kedalam array order
-			$order = array(
-						'status' => "pending",
-						'alamat_kirim' => $data['datadiri']->alamat,
-						'user_id' => $userId,
-						'harga' => $total
-						);
+			// /* Logic untuk menghitung total biaya */
+			// foreach ($data['dataproduk'] as $value) {
+			// 		if($value->product_qty > 0){
+			// 			$get_dataP = $this->order_m->get_product($value->product_id);
+			// 			$produk[] = $value;
+			// 			$tglSekarang = date('Y-m-d');
+			// 			$tglPromo = date('Y-m-d', strtotime($get_dataP->deadline_promo));
+			// 			$price = 0;
 
-			$order_id = $this->streams->entries->insert_entry($order, 'order', 'streams');
+			// 			// cek jika tanggal sekarang apakah ada promo
+			// 			if($tglSekarang <= $tglPromo){
+			// 				// cek jika product typenya fisik maka harus ditambahkan biaya						
+			// 					if($value->product_type == "fisik"){
+			// 						$total += $value->product_qty * ($get_dataP->harga_promo + $data['datadiri']->wilayah);
+			// 					}else{
+			// 						$total += $value->product_qty * $get_dataP->harga_promo;
+			// 					}
+			// 			}
+			// 			else{
+			// 				// cek jika product typenya fisik maka harus ditambahkan biaya
+			// 					if($value->product_type == "fisik"){
+			// 						$total += $value->product_qty * ($get_dataP->harga + $data['datadiri']->wilayah);
+			// 					}else{
+			// 						$total += $value->product_qty * $get_dataP->harga;
+			// 					}
+			// 			}
+			// 		}
+			// }
+
+			// // // menyusun data dr data yg telah dilempar dari ajax kedalam array order
+			// $order = array(
+			// 			'status' => "pending",
+			// 			'alamat_kirim' => $data['datadiri']->alamat,
+			// 			'user_id' => $userId,
+			// 			'harga' => $total
+			// 			);
+
+			// $order_id = $this->streams->entries->insert_entry($order, 'order', 'streams');
 
 			
 
-			foreach($data['dataemail'] as $email){
-					// daftarkan email pesanan produk menjadi user register
-					if($email != $data['datadiri']->emailPrimer){
-						$username = str_replace("@", "-", $email);
-						$password = random_string("alnum", 11);
-						$additional_data = array(
-												'display_name' => "Nama Anda",
-												'first_name' => "Nama",
-												'last_name' => "Anda"
-												);
-						$this->ion_auth->register($username, $password, $email, null, $additional_data, 'user');
-					}
-				}
+			// foreach($data['dataemail'] as $email){
+			// 		// daftarkan email pesanan produk menjadi user register
+			// 		if($email != $data['datadiri']->emailPrimer){
+			// 			$username = str_replace("@", "-", $email);
+			// 			$password = random_string("alnum", 11);
+			// 			$additional_data = array(
+			// 									'display_name' => "Nama Anda",
+			// 									'first_name' => "Nama",
+			// 									'last_name' => "Anda"
+			// 									);
+			// 			$this->ion_auth->register($username, $password, $email, null, $additional_data, 'user');
+			// 		}
+			// 	}
 
 
-			foreach ($produk as $items){
-				$getdataproduct = $this->order_m->get_product($items->product_id);
-				$tglSekarang = date('Y-m-d');
-				$tglPromo = date('Y-m-d', strtotime($getdataproduct->deadline_promo));
-				$currentPrice = 0;
+			// foreach ($produk as $items){
+			// 	$getdataproduct = $this->order_m->get_product($items->product_id);
+			// 	$tglSekarang = date('Y-m-d');
+			// 	$tglPromo = date('Y-m-d', strtotime($getdataproduct->deadline_promo));
+			// 	$currentPrice = 0;
 
-					if($tglSekarang <= $tglPromo){
-						if($items->product_type == 'fisik'){
-							$currentPrice = $items->product_qty * ($getdataproduct->harga_promo + $data['datadiri']->wilayah);
-						}else{
-							$currentPrice = $items->product_qty * $getdataproduct->harga_promo;
-						}
-					}else{
-						if($items->product_type == 'fisik'){
-							$currentPrice = $items->product_qty * ($getdataproduct->harga + $data['datadiri']->wilayah) ;
-						}else{
-							$currentPrice = $items->product_qty * $getdataproduct->harga;
-						}
-					}
+			// 		if($tglSekarang <= $tglPromo){
+			// 			if($items->product_type == 'fisik'){
+			// 				$currentPrice = $items->product_qty * ($getdataproduct->harga_promo + $data['datadiri']->wilayah);
+			// 			}else{
+			// 				$currentPrice = $items->product_qty * $getdataproduct->harga_promo;
+			// 			}
+			// 		}else{
+			// 			if($items->product_type == 'fisik'){
+			// 				$currentPrice = $items->product_qty * ($getdataproduct->harga + $data['datadiri']->wilayah) ;
+			// 			}else{
+			// 				$currentPrice = $items->product_qty * $getdataproduct->harga;
+			// 			}
+			// 		}
 
-					$subTotal = $currentPrice * $items->product_qty;
+			// 		$subTotal = $currentPrice * $items->product_qty;
 
-					$orderProduk = array(
-									'order_id' => $order_id,
-									'produk_id' => $items->product_id,
-									'harga' => $currentPrice,
-									'qty' => $items->product_qty,
-									'sub_total' => $subTotal
-								);
-					$this->streams->entries->insert_entry($orderProduk, 'product_order', 'streams');
-			}
+			// 		$orderProduk = array(
+			// 						'order_id' => $order_id,
+			// 						'produk_id' => $items->product_id,
+			// 						'harga' => $currentPrice,
+			// 						'qty' => $items->product_qty,
+			// 						'sub_total' => $subTotal
+			// 					);
+			// 		$this->streams->entries->insert_entry($orderProduk, 'product_order', 'streams');
+			// }
 
-			// print_r($userId);
+			// // print_r($userId);
 
-			// $dump($datadiri);
+			// // $dump($datadiri);
 		}
 
 	}

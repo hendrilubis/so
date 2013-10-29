@@ -218,6 +218,8 @@
         $tryout_qty = 0;
         $digital_qty = 0;
         $fisik_qty = 0;
+
+        $tryout_each = new Array();
         
         $("#wizard").steps({
             headerTag: "h2",
@@ -231,7 +233,9 @@
                     $tryout_qty = 0;
                     $('.qty-tryout').each(function(i, v){
                         $tryout_qty += parseInt($(v).val());
+                        $tryout_each[i] = {product_id: $(v).data('product-id'), qty: parseInt($(v).val()), name: $(v).data('product-name')};
                     });
+                    console.log($tryout_each);
 
                     $digital_qty = 0;
                     $('.qty-digital').each(function(i, v){
@@ -271,7 +275,7 @@
                     var i=0;
 
                     $('.email').each(function(i, v){
-                        edata[i] = $(v).val();
+                        edata[i] = {type: $(v).attr('id'), email: $(v).val(), tryout: $(v).attr('rel')};
                         i++;
                     });
 
@@ -314,10 +318,15 @@
 
                 if (currentIndex === 1 && priorIndex === 0 && $tryout_qty > 1){
                     $('#emaillist tbody').empty();
-                    // alert($tryout_qty);                
-                    for(var i=1; i<=$tryout_qty; i++ ){
-                        $('#emaillist tbody').append('<tr><td>Email '+i+'</td><td><input type="text" class="span5 input-large email" name="email['+i+']"></td></tr>');
+                    // alert($tryout_qty);
+                    $form_email = "";
+                    for(var e=0; e<$tryout_each.length; e++){
+                        $form_email += '<tr><th>'+$tryout_each[e].name+'</th></tr>';
+                        for(var i=1; i<=$tryout_each[e].qty; i++){
+                            $form_email += '<tr><td>Email '+i+'</td><td><input type="text" class="span5 input-large email" rel="'+$tryout_each[e].name+'" id="'+$tryout_each[e].product_id+'" name="email['+i+']"></td></tr>';
+                        }
                     }
+                    $('#emaillist tbody').append($form_email);
                 }
 
                 // step konfirmasi
@@ -326,22 +335,14 @@
                     var dataDiri = JSON.parse($.cookie('ddata'));
                     console.log(dataDiri);
 
-                        $('.nama-depan').empty();
-                        $('.nama-depan').append(dataDiri.namaDepan);
-                        $('.nama-belakang').empty();
-                        $('.nama-belakang').append(dataDiri.namaBelakang);
-                        $('.email-primer').empty();
-                        $('.email-primer').append(dataDiri.emailPrimer);
-                        $('.alamat-kirim').empty();
-                        $('.alamat-kirim').append(dataDiri.alamat);
-                        $('.wilayah-kirim').empty();
-                        $('.wilayah-kirim').append(dataDiri.wil);
-                        $('.nama-sekolah').empty();
-                        $('.nama-sekolah').append(dataDiri.sekolah);
-                        $('.provinsi-sekolah').empty();
-                        $('.provinsi-sekolah').append(dataDiri.provinsi);
-                        $('.alamat-sekolah').empty();
-                        $('.alamat-sekolah').append(dataDiri.alamatSekolah);
+                        $('.nama-depan').empty().append(dataDiri.namaDepan);
+                        $('.nama-belakang').empty().append(dataDiri.namaBelakang);
+                        $('.email-primer').empty().append(dataDiri.emailPrimer);
+                        $('.alamat-kirim').empty().append(dataDiri.alamat);
+                        $('.wilayah-kirim').empty().append(dataDiri.wil);
+                        $('.nama-sekolah').empty().append(dataDiri.sekolah);
+                        $('.provinsi-sekolah').empty().append(dataDiri.provinsi);
+                        $('.alamat-sekolah').empty().append(dataDiri.alamatSekolah);
 
                         /* akhir dari menampilkan data diri */ 
 
@@ -378,7 +379,7 @@
                         $('#data-email').empty();
                             for(var j=0; j < $tryout_qty; j++){
                                 var i = 1; i += j;
-                                $('#data-email').append('<tr><td> Email '+ i +' </td><td>' + emaillist[j] + '</td></tr>');
+                                $('#data-email').append('<tr><td> Email '+ i +' untuk '+ emaillist[j].tryout +'</td><td>' + emaillist[j].email + '</td></tr>');
                             }
                     }
 
