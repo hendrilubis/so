@@ -187,7 +187,7 @@ class Module_So extends Module
         $fields   = array();
         $template = array('namespace' => $namespace, 'assign' => 'to_order');
 
-        $fields[] = array('name'=>'User ID', 'slug'=>'user_id', 'type'=>'relationship', 'required' => true, 'unique' => false, 'instructions' => 'Produk bertipe try out', 'extra'=>array("choose_stream"=>"3", "link_uri"=>null));
+        $fields[] = array('name'=>'User ID', 'slug'=>'user_id', 'type'=>'relationship', 'required' => true, 'unique' => false, 'instructions' => '', 'extra'=>array("choose_stream"=>"3", "link_uri"=>null));
         $fields[] = array('name'=>'Produk ID', 'slug'=>'produk_id', 'type'=>'relationship', 'required' => true, 'unique' => false, 'instructions' => 'Produk bertipe try out', 'extra'=>array("choose_stream"=>$product->id, "link_uri"=>null));
         $fields[] = array('name'=>'Order ID', 'slug'=>'order_id', 'type'=>'relationship', 'required' => true, 'unique' => false, 'instructions' => 'Id pesanan', 'extra'=>array("choose_stream"=>$order->id, "link_uri"=>null));
         $fields[] = array('name'=>'Email', 'slug'=>'email', 'type'=>'email', 'required' => true, 'unique' => true, 'instructions' => 'Email user yang memesan untuk nantinya diregistrasikan sebagai user setelah bayar pemesanan', 'extra'=>false);
@@ -254,6 +254,7 @@ class Module_So extends Module
         $namespace = 'to_order';
         $this->streams->streams->delete_stream('to_order', $namespace);
 
+        $this->streams->fields->delete_field('user_id', $namespace);
         $this->streams->fields->delete_field('produk_id', $namespace);
         $this->streams->fields->delete_field('order_id', $namespace);
         $this->streams->fields->delete_field('email', $namespace);

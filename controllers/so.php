@@ -59,6 +59,8 @@ class So extends Public_Controller {
 									);
 			$userId = $this->ion_auth->register($username, $pwprimer, $data['datadiri']->emailPrimer, null, $additional_data, 'user');
 
+			echo "\nuid:".$userId;
+
 			// perhitungan harga
 
 			$produk = array();
@@ -108,6 +110,9 @@ class So extends Public_Controller {
 				'harga' => $total
 				);
 			$order_id = $this->streams->entries->insert_entry($order, 'order', 'order');
+			unset($order);
+
+			echo "\nuid:".$userId;
 
 			// sisipkan order_id di setiap daftar produk buat dimasukin ke tabel product_order
 			$produk_order = array();
@@ -118,9 +123,9 @@ class So extends Public_Controller {
 
 			print_r($produk_order);
 
-			$akun = array();
 			foreach($data['dataemail'] as $email){
-				if($email != $data['datadiri']->emailPrimer){
+
+				if($email->email != $data['datadiri']->emailPrimer){
 					// daftarkan email pesanan produk menjadi user register
 					$username = str_replace("@", "-", $email->email);
 					$password = random_string("alnum", 11);
@@ -129,29 +134,30 @@ class So extends Public_Controller {
 						'first_name' => "Nama",
 						'last_name' => "Anda"
 						);
-					$this->ion_auth->register($username, $password, $email->email, null, $additional_data, 'user');
+					$uid = $this->ion_auth->register($username, $password, $email->email, null, $additional_data, 'user');
 
 					$akun = array(
+						'user_id' => $uid,
 						'produk_id' => $email->type,
 						'order_id' => $order_id,
 						'email'=> $email->email,
 						'generated_key' => $password
 						);
-
+					// simpan data akun tryout di tabel to_order
+					$this->streams->entries->insert_entry($akun, 'to_order', 'to_order');
+					
 				} else {
-					$akun = array(
+					$akunutama = array(
+						'user_id' => $userId,
 						'produk_id' => $email->type,
 						'order_id' => $order_id,
 						'email'=> $email->email,
 						'generated_key' => $pwprimer
 						);
-				}
-	
-				// simpan data akun tryout di tabel to_order
-				$this->streams->entries->insert_entry($akun, 'to_order', 'to_order');
+					// simpan data akun tryout di tabel to_order
+					$this->streams->entries->insert_entry($akunutama, 'to_order', 'to_order');
+				};
 			}
-
-			print_r($akun);
 
 			echo 'sukses';
 		}
