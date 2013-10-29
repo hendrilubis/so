@@ -75,12 +75,13 @@ class So extends Public_Controller {
 					$tglPromo = date('Y-m-d', strtotime($dataProduk->deadline_promo));
 					
 					// cek apakah mesti pake harga kolektif, promo, atau harga biasa
-					if($value->product_qty > 1)
+					if($value->product_qty >= 5){
 						$harga = $dataProduk->harga_kolektif;
-					else if($tglSekarang <= $tglPromo)
+					}elseif($tglSekarang <= $tglPromo){
 						$harga = $dataProduk->harga_promo;
-					else
+					}else{
 						$harga = $dataProduk->harga;
+					}
 
 					// cek jika product typenya fisik maka harus ditambahkan biaya						
 					if($value->product_type == "fisik"){
