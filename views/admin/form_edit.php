@@ -19,14 +19,14 @@
             
             <tbody>
                 <tr>
-                	<td><?php echo $data->created_by_username; ?></td>
+                	<td><?php echo $data->user_id; ?></td>
                     <td><?php echo $data->alamat_kirim; ?></td> 
                     <td><?php echo $data->created_by_email; ?></td>
                     <td><?php echo $form; ?></td>
                 </tr>
             </tbody>
         </table>
-        <!-- <?php //dump($orderproduct);?> -->
+        <?php //dump($data);?>
 
         <br>
     	

@@ -72,12 +72,12 @@ class Admin extends Admin_Controller {
             'title' => anchor('admin/so/edit/'.$id, 'Order').' &raquo; '.lang('simple_order:edit')
         );
 
-        $skips = array('allow_comment', 'trashed');
+        $skips = array();
         $hidden = array( 'user_id', 'harga', 'product_id', 'alamat_kirim');
 
-        $order['form'] = $this->streams->cp->entry_form('order', 'streams', 'edit', $id, false, $extra, $skips, false, $hidden);
+        $order['form'] = $this->streams->cp->entry_form('order', 'order', 'edit', $id, false, $extra, $skips, false, $hidden);
 
-		$order['data'] = $this->streams->entries->get_entry($id, 'order', 'streams', true);
+		$order['data'] = $this->streams->entries->get_entry($id, 'order', 'order', true);
 
 		$params = array(
 				'stream' => 'product_order',

@@ -29,7 +29,7 @@ class Module_So extends Module
             ),
             'frontend' => true,
             'backend' => true,
-            'menu' => 'content',
+            // 'menu' => 'content',
             'sections' => array(
                 'order_product' => array(
                     'name' => 'Product Order',
@@ -138,8 +138,8 @@ class Module_So extends Module
         $fields   = array();
         $template = array('namespace' => $namespace, 'assign' => 'product_order');
 
-        $fields[] = array('name'=>'Order ID', 'slug'=>'order_id', 'type'=>'relationship', 'required' => true, 'unique' => false, 'instructions' => '', 'extra'=>array("choose_stream"=>"34", "link_uri"=>null));
-        $fields[] = array('name'=>'Produk Id', 'slug'=>'produk_id', 'type'=>'relationship', 'required' => true, 'unique' => false, 'instructions' => '', 'extra'=>array("choose_stream"=>"31", "link_uri"=>null));
+        $fields[] = array('name'=>'Order ID', 'slug'=>'order_id', 'type'=>'relationship', 'required' => true, 'unique' => false, 'instructions' => '', 'extra'=>array("choose_stream"=>$order->id, "link_uri"=>null));
+        $fields[] = array('name'=>'Produk Id', 'slug'=>'produk_id', 'type'=>'relationship', 'required' => true, 'unique' => false, 'instructions' => '', 'extra'=>array("choose_stream"=>$product->id, "link_uri"=>null));
         $fields[] = array('name'=>'Harga', 'slug'=>'harga', 'type'=>'integer', 'required' => true, 'unique' => false, 'instructions' => 'Harga produk pada saat dipesan', 'extra'=>array("max_length"=>"255", "default_value"=>""));
         $fields[] = array('name'=>'Quantity', 'slug'=>'qty', 'type'=>'integer', 'required' => false, 'unique' => false, 'instructions' => '', 'extra'=>array("max_length"=>"", "default_value"=>"0"));
         $fields[] = array('name'=>'Sub Total', 'slug'=>'sub_total', 'type'=>'integer', 'required' => true, 'unique' => false, 'instructions' => 'harga produk saat dipesan dikali kuantiti', 'extra'=>array("max_length"=>"", "default_value"=>"0"));
@@ -187,8 +187,9 @@ class Module_So extends Module
         $fields   = array();
         $template = array('namespace' => $namespace, 'assign' => 'to_order');
 
-        $fields[] = array('name'=>'Produk Id', 'slug'=>'produk_id', 'type'=>'relationship', 'required' => true, 'unique' => false, 'instructions' => 'Produk bertipe try out', 'extra'=>array("choose_stream"=>"31", "link_uri"=>null));
-        $fields[] = array('name'=>'Order ID', 'slug'=>'order_id', 'type'=>'relationship', 'required' => true, 'unique' => false, 'instructions' => 'Id pesanan', 'extra'=>array("choose_stream"=>"34", "link_uri"=>null));
+        $fields[] = array('name'=>'User ID', 'slug'=>'user_id', 'type'=>'relationship', 'required' => true, 'unique' => false, 'instructions' => 'Produk bertipe try out', 'extra'=>array("choose_stream"=>"3", "link_uri"=>null));
+        $fields[] = array('name'=>'Produk ID', 'slug'=>'produk_id', 'type'=>'relationship', 'required' => true, 'unique' => false, 'instructions' => 'Produk bertipe try out', 'extra'=>array("choose_stream"=>$product->id, "link_uri"=>null));
+        $fields[] = array('name'=>'Order ID', 'slug'=>'order_id', 'type'=>'relationship', 'required' => true, 'unique' => false, 'instructions' => 'Id pesanan', 'extra'=>array("choose_stream"=>$order->id, "link_uri"=>null));
         $fields[] = array('name'=>'Email', 'slug'=>'email', 'type'=>'email', 'required' => true, 'unique' => true, 'instructions' => 'Email user yang memesan untuk nantinya diregistrasikan sebagai user setelah bayar pemesanan', 'extra'=>false);
         $fields[] = array('name'=>'Generated Key', 'slug'=>'generated_key', 'type'=>'text', 'required' => true, 'unique' => true, 'instructions' => 'Kode yang digenerate buat password user try out', 'extra'=>array("max_length"=>"20", "default_value"=>""));
 
