@@ -415,5 +415,3 @@
 
     })
     </script>
-
-    <?php dump($entries); ?>

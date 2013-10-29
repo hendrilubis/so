@@ -40,7 +40,7 @@ class Order_m extends My_Model{
 
 	public function get_product($id_product){
 
-		return $this->db->select('harga, deadline_promo, harga_promo')
+		return $this->db->select('harga, deadline_promo, harga_promo, harga_kolektif')
 						->from('so_product')
 						->where('id', $id_product)
 						->get()->row();
