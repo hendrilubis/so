@@ -59,7 +59,8 @@ class So extends Public_Controller {
 									);
 			$userId = $this->ion_auth->register($username, $pwprimer, $data['datadiri']->emailPrimer, null, $additional_data, 'user');
 
-			echo "\nuid:".$userId;
+			// nonaktifkan dulu sampai si customer bayar
+			$this->ion_auth->deactivate($userId);
 
 			// perhitungan harga
 
@@ -110,9 +111,6 @@ class So extends Public_Controller {
 				'harga' => $total
 				);
 			$order_id = $this->streams->entries->insert_entry($order, 'order', 'order');
-			unset($order);
-
-			echo "\nuid:".$userId;
 
 			// sisipkan order_id di setiap daftar produk buat dimasukin ke tabel product_order
 			$produk_order = array();
@@ -136,6 +134,9 @@ class So extends Public_Controller {
 						);
 					$uid = $this->ion_auth->register($username, $password, $email->email, null, $additional_data, 'user');
 
+					// nonaktifkan dulu sampai si customer bayar
+					$this->ion_auth->deactivate($uid);
+
 					$akun = array(
 						'user_id' => $uid,
 						'produk_id' => $email->type,
@@ -143,20 +144,19 @@ class So extends Public_Controller {
 						'email'=> $email->email,
 						'generated_key' => $password
 						);
-					// simpan data akun tryout di tabel to_order
-					$this->streams->entries->insert_entry($akun, 'to_order', 'to_order');
 					
 				} else {
-					$akunutama = array(
+					$akun = array(
 						'user_id' => $userId,
 						'produk_id' => $email->type,
 						'order_id' => $order_id,
 						'email'=> $email->email,
 						'generated_key' => $pwprimer
 						);
-					// simpan data akun tryout di tabel to_order
-					$this->streams->entries->insert_entry($akunutama, 'to_order', 'to_order');
 				};
+			
+				// simpan data akun tryout di tabel to_order
+				$this->streams->entries->insert_entry($akun, 'to_order', 'to_order');
 			}
 
 			echo 'sukses';
