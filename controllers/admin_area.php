@@ -46,7 +46,7 @@ class Admin_area extends Admin_Controller {
             'return' => 'admin/so/area',
             'success_message' => lang('simple_order:success_create'),
             'failure_message' => lang('simple_order:failure_create'),
-            'title' => 'lang:simple_order:new_area',
+            'title' => lang('simple_order:new_area'),
          );
 
         $this->streams->cp->entry_form('shipping', 'shipping', 'new', null, true, $extra);

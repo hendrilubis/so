@@ -57,7 +57,7 @@ class Admin_product extends Admin_Controller{
             'return' => 'so/admin_product/index',
             'success_message' => lang('simple_order:success_create'),
             'failure_message' => lang('simple_order:failure_create'),
-            'title' => 'lang:simple_order:new',
+            'title' => lang('simple_order:new'),
          );
 
 
