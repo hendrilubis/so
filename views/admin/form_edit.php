@@ -8,20 +8,24 @@
 <section class="item">
 	<div class="content">
 		<table>
-        	<thead>
-            	<tr class="title">
-	            	<th width="150px">Username</th>
-	                <th width="150px">Alamat Kirim</th>
-	                <th width="150px">Email</th>
-	                <th>Status</th>
-                </tr>
-            </thead>
-            
             <tbody>
                 <tr>
-                	<td><?php echo $data->user_id; ?></td>
-                    <td><?php echo $data->alamat_kirim; ?></td> 
-                    <td><?php echo $data->created_by_email; ?></td>
+                	<td>
+                		<dt>Nama Pemesan</dt>
+                		<dd><?php echo $profile->first_name.' '.$profile->last_name; ?></dd>
+                		<dt>Alamat Email</dt>
+                		<dd><?php echo $data->created_by_email; ?></dd>
+                    	<dt>Alamat Kirim</dt>
+                    	<dd><?php echo $data->alamat_kirim; ?></dd>
+                    </td>
+                    <td>
+                    	<dt>Sekolah</dt>
+                    	<dd><?php echo $profile->sekolah; ?></dd>
+                    	<dt>Alamat Sekolah</dt>
+                    	<dd><?php echo $profile->alamat_sekolah; ?></dd>
+                    	<dt>Provinsi</dt>
+                    	<dd><?php echo $profile->provinsi; ?></dd>
+                	</td>
                     <td><?php echo $form; ?></td>
                 </tr>
             </tbody>
@@ -61,3 +65,8 @@
     	</table>
     </div>
 </section>
+
+<style>
+	dt {line-height: 16px; font-weight: bold;}
+	dd {line-height: 16px; margin-bottom: 10px;}
+</style>

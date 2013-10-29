@@ -79,6 +79,8 @@ class Admin extends Admin_Controller {
 
 		$order['data'] = $this->streams->entries->get_entry($id, 'order', 'order', true);
 
+		$order['profile'] = $this->ion_auth->get_user($order['data']->user_id);
+
 		$params = array(
 				'stream' => 'product_order',
 				'namespace' => 'product_order',
