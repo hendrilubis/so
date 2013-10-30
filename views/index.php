@@ -204,6 +204,7 @@
 
     <script>
     jQuery(function($){
+
         function errorPlacement(error, element){
                 element.before(error);
             }
@@ -397,6 +398,7 @@
             // ketika akan finishing
             onFinishing: function (event, currentIndex)
             { 
+
                 // 1. cek kelengkapan data
 
 
@@ -408,12 +410,23 @@
                 }).done(function(msg) {
                     // script kalo data sudah berhasil disimpan
                     console.log(msg);
-                    return true;
+                    if(msg === "sukses"){
+                        return true;
+                    }
+                    return false;
                 });
 
+            },
+
+            onfinished: function (event, currentIndex) { 
+                if(currentIndex === 2){
+                    window.location = "<?php echo site_url(); ?>";
+                }
+            
             }
 
         });
+
 
         $('.close').click(function(){
             $('.'+$(this).attr('data-target')).hide();

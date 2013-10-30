@@ -19,6 +19,7 @@ class So extends Public_Controller {
 		$this->template->append_js('module::jquery.cookie-1.4.0.js');
 		$this->load->model('order_m');
 		$this->load->helper('string');
+		$this->load->helper('url');
 		// $this->template->append_js('module::jquery.steps.min.js');
 	}
 
@@ -159,7 +160,7 @@ class So extends Public_Controller {
 				// simpan data akun tryout di tabel to_order
 				$this->streams->entries->insert_entry($akun, 'to_order', 'to_order');
 			}
-
+			// echo site_url();
 			echo 'sukses';
 		}
 
