@@ -410,18 +410,18 @@
                 }).done(function(msg) {
                     // script kalo data sudah berhasil disimpan
                     console.log(msg);
-                    if(msg === "sukses"){
+                    // if(msg === "sukses"){
                         return true;
-                    }
-                    return false;
+                    // }
+                    // return false;
                 });
 
             },
 
             onfinished: function (event, currentIndex) { 
-                if(currentIndex === 2){
+                // if(currentIndex === 2){
                     window.location = "<?php echo site_url(); ?>";
-                }
+                // }
             
             }
 
