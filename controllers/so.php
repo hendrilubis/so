@@ -78,7 +78,7 @@ class So extends Public_Controller {
 					$tglPromo = date('Y-m-d', strtotime($dataProduk->deadline_promo));
 					
 					// cek apakah mesti pake harga kolektif, promo, atau harga biasa
-					if($value->product_qty >= 5){ // kang ini itu perhitungannya salah gak? masalahnya tiap pembelian kolektif perproduk kan? bukan jumalah ordernya
+					if($value->product_qty > 5){ 
 						$harga = $dataProduk->harga_kolektif;
 					}elseif($tglSekarang <= $tglPromo){
 						$harga = $dataProduk->harga_promo;

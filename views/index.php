@@ -355,7 +355,7 @@
                         if(order[i].product_qty > 0){
                             if(order[i].product_type == 'fisik'){
                                 hargaProduk = parseInt(order[i].product_harga) +  parseInt(dataDiri.wilayah);
-                            }else if(){}
+                            }//else if(){}
                             else{
                                 hargaProduk = order[i].product_harga;
                             }
