@@ -49,7 +49,7 @@
                                     <?php endif; ?>
                                     <td><input type="text" name="qty[<?php echo $item['id']; ?>]" class="input-mini products qty-<?php echo $item['type']['key']; ?>" 
                                         data-product-id="<?php echo $item['id']; ?>" data-product-name="<?php echo $item['product_code']; ?>" 
-                                        data-product-harga="<?php echo $harga ?>" data-product-type="<?php echo $item['type']['key']; ?>" value="0"></td>
+                                        data-product-harga="<?php echo $harga ?>" data-product-kolektif="<?php echo $item['harga_kolektif']; ?>" data-product-type="<?php echo $item['type']['key']; ?>" value="0"></td>
                                 </tr>
                                 <?php $i++; endforeach; ?>
                             </tbody>
@@ -148,8 +148,9 @@
                                     </tbody>
                                     <tbody id="biaya-kirim">
                                     </tbody>
+                                    <tfoot id="harga-kolektif">
+                                    </tfoot>
                                     <tfoot id="total-harga">
-
                                     </tfoot>
                                 </table>
                         </div>
@@ -256,6 +257,7 @@
                                         product_name: $(v).attr('data-product-name'),
                                         product_harga: $(v).attr('data-product-harga'),
                                         product_type: $(v).attr('data-product-type'),
+                                        product_hargaKolektif: $(v).attr('data-product-kolektif'),
                                         product_qty: $(v).val() };
                             i++;
                         });
@@ -353,7 +355,8 @@
                         if(order[i].product_qty > 0){
                             if(order[i].product_type == 'fisik'){
                                 hargaProduk = parseInt(order[i].product_harga) +  parseInt(dataDiri.wilayah);
-                            }else{
+                            }else if(){}
+                            else{
                                 hargaProduk = order[i].product_harga;
                             }
                             var totalbiaya = hargaProduk * order[i].product_qty;
@@ -364,6 +367,8 @@
                     }
                     
                     console.log(hargaTotal);
+                    $('#harga-kolektif').empty();
+                    $('#harga-kolektif').append('<tr><td colspan="3"><b>Potongan Kolektif Pembelian Lebih Dari 5 </b></td><td>' + hargaTotal + '</td>');
                     $('#total-harga').empty();
                     $('#total-harga').append('<tr><td colspan="3"><b>Total Bayar</b></td><td>' + hargaTotal + '</td>');
                     
