@@ -140,6 +140,7 @@
                                             <th>Nama Produk</th>
                                             <th>Harga</th>
                                             <th>Kuantitas</th>
+                                            <th>Potongan Kolektif</th>
                                             <th>Jumlah</th>
                                         </tr>
                                     </thead>
@@ -148,8 +149,6 @@
                                     </tbody>
                                     <tbody id="biaya-kirim">
                                     </tbody>
-                                    <tfoot id="harga-kolektif">
-                                    </tfoot>
                                     <tfoot id="total-harga">
                                     </tfoot>
                                 </table>
@@ -308,14 +307,14 @@
             // setelah pindah step
             onStepChanged: function (event, currentIndex, priorIndex)
             {
-                if (currentIndex === 1 && priorIndex === 0 && $tryout_qty <= 1){
+                if (currentIndex === 1 && priorIndex === 0 && $tryout_qty < 1){
                     $("#wizard").steps("next");
                 }   
-                if (currentIndex === 1 && priorIndex === 2 && $tryout_qty <= 1){
+                if (currentIndex === 1 && priorIndex === 2 && $tryout_qty < 1){
                     $("#wizard").steps("previous");
                 }
 
-                if (currentIndex === 1 && priorIndex === 0 && $tryout_qty > 1){
+                if (currentIndex === 1 && priorIndex === 0 && $tryout_qty >= 1){
                     $('#emaillist tbody').empty();
                     // alert($tryout_qty);
                     $form_email = "";
@@ -350,27 +349,32 @@
                     console.log(order);
                     var hargaTotal = 0;
                     var biayaKirim = 0;
+                    var hargaKolektif = 0;
                     $('#data-produk').empty();
                     for(var i=0; i < order.length; i++){
                         if(order[i].product_qty > 0){
                             if(order[i].product_type == 'fisik'){
                                 hargaProduk = parseInt(order[i].product_harga) +  parseInt(dataDiri.wilayah);
-                            }//else if(){}
+                            }
                             else{
                                 hargaProduk = order[i].product_harga;
                             }
-                            var totalbiaya = hargaProduk * order[i].product_qty;
+
+                            if(order[i].product_qty > 5){
+                                var temp = parseInt(order[i].product_harga) - parseInt(order[i].product_hargaKolektif);
+                                hargaKolektif = order[i].product_qty * temp;
+                            }
+
+                            var totalbiaya = (hargaProduk * order[i].product_qty) - hargaKolektif;
                             hargaTotal += totalbiaya;
 
-                            $('#data-produk').append('<tr><td>' + order[i].product_name + '</td><td>' + hargaProduk + '</td><td>' + order[i].product_qty + '</td><td>' + totalbiaya + '</td></tr>');
+                            $('#data-produk').append('<tr><td>' + order[i].product_name + '</td><td>' + hargaProduk + '</td><td>' + order[i].product_qty + '</td><td>' + hargaKolektif + '</td><td>' + totalbiaya + '</td></tr>');
                         }
                     }
                     
                     console.log(hargaTotal);
-                    $('#harga-kolektif').empty();
-                    $('#harga-kolektif').append('<tr><td colspan="3"><b>Potongan Kolektif Pembelian Lebih Dari 5 </b></td><td>' + hargaTotal + '</td>');
                     $('#total-harga').empty();
-                    $('#total-harga').append('<tr><td colspan="3"><b>Total Bayar</b></td><td>' + hargaTotal + '</td>');
+                    $('#total-harga').append('<tr><td colspan="4"><b>Total Bayar</b></td><td>' + hargaTotal + '</td>');
                     
                     // menampilkan data email yang disimpan di cookie
                     if($tryout_qty > 1){
