@@ -28,10 +28,10 @@ class Order_m extends My_Model{
 
 	public function get_shipping(){
 
-		$data = $this->db->distinct()->select('id, tujuan, harga')->get('so_shipping')->result();
+		$data = $this->db->distinct()->select('id, destination, shipping_cost')->get('so_shipping')->result();
 			$wilayah = array();
 				foreach ($data as $value) {
-					$wilayah[$value->harga] = $value->tujuan;
+					$wilayah[$value->shipping_cost] = $value->destination;
 				}
 				
 			return $wilayah;
@@ -40,7 +40,7 @@ class Order_m extends My_Model{
 
 	public function get_product($id_product){
 
-		return $this->db->select('harga, deadline_promo, harga_promo, harga_kolektif')
+		return $this->db->select('price, promo_deadline, promo_price, collective_price')
 						->from('so_product')
 						->where('id', $id_product)
 						->get()->row();

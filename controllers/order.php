@@ -27,7 +27,7 @@ class Order extends Public_Controller {
 	public function index() {
 				$params = array(
 				'stream'		=> 'product',
-				'namespace'		=> 'product',
+				'namespace'		=> 'streams',
 				'paginate' 		=> 'yes',
 				'limit'			=> 10,
 				'page_segment' 	=> 4
@@ -76,15 +76,15 @@ class Order extends Public_Controller {
 				if($value->product_qty > 0){
 					$dataProduk = $this->order_m->get_product($value->product_id);
 					$tglSekarang = date('Y-m-d');
-					$tglPromo = date('Y-m-d', strtotime($dataProduk->deadline_promo));
+					$tglPromo = date('Y-m-d', strtotime($dataProduk->promo_deadline));
 					
 					// cek apakah mesti pake harga kolektif, promo, atau harga biasa
 					if($value->product_qty > 5){ 
-						$harga = $dataProduk->harga_kolektif;
+						$harga = $dataProduk->collective_price;
 					}elseif($tglSekarang <= $tglPromo){
-						$harga = $dataProduk->harga_promo;
+						$harga = $dataProduk->promo_price;
 					}else{
-						$harga = $dataProduk->harga;
+						$harga = $dataProduk->price;
 					}
 
 					// cek jika product typenya fisik maka harus ditambahkan biaya						
@@ -95,8 +95,8 @@ class Order extends Public_Controller {
 					$subtotal = $harga * $value->product_qty;					
 
 					$produk[] = array(
-						'produk_id' => $value->product_id,
-						'harga' => $harga,
+						'product_id' => $value->product_id,
+						'product_price' => $harga,
 						'qty' => $value->product_qty,
 						'sub_total' => $subtotal
 						);
@@ -107,18 +107,18 @@ class Order extends Public_Controller {
 
 			// menyusun data dr data yg telah dilempar dari ajax kedalam array order
 			$order = array(
-				'status' => "pending",
-				'alamat_kirim' => $data['datadiri']->alamat,
+				'order_status' => "pending",
+				'shipping_address' => $data['datadiri']->alamat,
 				'user_id' => $userId,
-				'harga' => $total
+				'order_total' => $total
 				);
-			$order_id = $this->streams->entries->insert_entry($order, 'order', 'order');
+			$order_id = $this->streams->entries->insert_entry($order, 'order', 'streams');
 
 			// sisipkan order_id di setiap daftar produk buat dimasukin ke tabel product_order
 			$produk_order = array();
 			foreach ($produk as $value) {
 				$produk_order = $value + array('order_id' => $order_id);
-				$this->streams->entries->insert_entry($produk_order, 'product_order', 'product_order');
+				$this->streams->entries->insert_entry($produk_order, 'product_order', 'streams');
 			}
 
 			print_r($produk_order);
@@ -141,24 +141,24 @@ class Order extends Public_Controller {
 
 					$akun = array(
 						'user_id' => $uid,
-						'produk_id' => $email->type,
+						'product_id' => $email->type,
 						'order_id' => $order_id,
-						'email'=> $email->email,
+						'user_email'=> $email->email,
 						'generated_key' => $password
 						);
 					
 				} else {
 					$akun = array(
 						'user_id' => $userId,
-						'produk_id' => $email->type,
+						'product_id' => $email->type,
 						'order_id' => $order_id,
-						'email'=> $email->email,
+						'user_email'=> $email->email,
 						'generated_key' => $pwprimer
 						);
 				};
 			
 				// simpan data akun tryout di tabel to_order
-				$this->streams->entries->insert_entry($akun, 'to_order', 'to_order');
+				$this->streams->entries->insert_entry($akun, 'to_order', 'streams');
 			}
 			// echo site_url();
 			echo 'sukses';

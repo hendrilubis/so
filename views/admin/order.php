@@ -22,9 +22,9 @@
 				<tr id="item_<?php echo $item["id"]; ?>">
 					<td><?php echo $i; ?></td>
 					<td><?php echo $item["created_by"]["display_name"]; ?></td>
-					<td><?php echo $item["status"]["value"]; ?></td>
-					<td><?php echo $item["alamat_kirim"]; ?></td>
-					<td><?php echo $this->settings->currency; ?> <?php echo number_format($item["harga"], 2, ",", "."); ?></td>
+					<td><?php echo $item["order_status"]["value"]; ?></td>
+					<td><?php echo $item["shipping_address"]; ?></td>
+					<td><?php echo $this->settings->currency; ?> <?php echo number_format($item["order_total"], 2, ",", "."); ?></td>
 					<td class="actions">
 						<?php echo anchor('admin/order/edit/'.$item["id"], lang('simple_order:edit'), array('class'=>'button', 'title'=>lang('simple_order:edit'))); ?>
 					</td>

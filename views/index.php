@@ -27,13 +27,13 @@
                                     <td><?php echo $item['product_code']; ?></td>
                                     <?php 
                                             $tglSekarang = date('Y-m-d');
-                                            $tglPromo = date('Y-m-d', $item['deadline_promo']);
+                                            $tglPromo = date('Y-m-d', $item['promo_deadline']);
                                             $harga = 0;
                                             if($tglSekarang <= $tglPromo ):
-                                                $harga = $item['harga_promo'];
+                                                $harga = $item['promo_price'];
                                     ?>
                                     <td><?php echo "Rp. "; echo number_format($harga, 2,",","."); $hargakirim = $harga + 10000; 
-                                                    if($item['type']['key'] == "fisik"){ 
+                                                    if($item['product_type']['key'] == "fisik"){ 
                                                         echo "<br />(Luar Jabodetabek "; 
                                                         echo $hargakirim; 
                                                         echo ")"; 
@@ -41,15 +41,15 @@
                                     <?php else: 
                                                 $harga = $item['harga']; ?>
                                     <td><?php echo "Rp. "; echo number_format($harga, 2,",","."); $hargakirim = $harga + 10000; 
-                                                    if($item['type']['key'] == "fisik"){ 
+                                                    if($item['product_type']['key'] == "fisik"){ 
                                                         echo "<br />(Luar Jabodetabek "; 
                                                         echo $hargakirim; 
                                                         echo ")"; 
                                                     }?></td>
                                     <?php endif; ?>
-                                    <td><input type="text" name="qty[<?php echo $item['id']; ?>]" class="input-mini products qty-<?php echo $item['type']['key']; ?>" 
+                                    <td><input type="text" name="qty[<?php echo $item['id']; ?>]" class="input-mini products qty-<?php echo $item['product_type']['key']; ?>" 
                                         data-product-id="<?php echo $item['id']; ?>" data-product-name="<?php echo $item['product_code']; ?>" 
-                                        data-product-harga="<?php echo $harga ?>" data-product-kolektif="<?php echo $item['harga_kolektif']; ?>" data-product-type="<?php echo $item['type']['key']; ?>" value="0"></td>
+                                        data-product-harga="<?php echo $harga ?>" data-product-kolektif="<?php echo $item['collective_price']; ?>" data-product-type="<?php echo $item['product_type']['key']; ?>" value="0"></td>
                                 </tr>
                                 <?php $i++; endforeach; ?>
                             </tbody>

@@ -28,7 +28,7 @@ class Admin extends Admin_Controller {
 	public function index() {
 		$params = array(
 				'stream'		=> 'order',
-				'namespace'		=> 'order',
+				'namespace'		=> 'streams',
 				'paginate' 		=> 'yes',
 				'limit'			=> 10,
 				'page_segment' 	=> 4
@@ -51,7 +51,7 @@ class Admin extends Admin_Controller {
 
 		$params = array(
 				'stream'		=> 'order',
-				'namespace'		=> 'order',
+				'namespace'		=> 'streams',
 				'paginate' 		=> 'yes',
 				'limit'			=> 10,
 				'page_segment' 	=> 4,
@@ -75,15 +75,15 @@ class Admin extends Admin_Controller {
         $skips = array();
         $hidden = array( 'user_id', 'harga', 'product_id', 'alamat_kirim');
 
-        $order['form'] = $this->streams->cp->entry_form('order', 'order', 'edit', $id, false, $extra, $skips, false, $hidden);
+        $order['form'] = $this->streams->cp->entry_form('order', 'streams', 'edit', $id, false, $extra, $skips, false, $hidden);
 
-		$order['data'] = $this->streams->entries->get_entry($id, 'order', 'order', true);
+		$order['data'] = $this->streams->entries->get_entry($id, 'order', 'streams', true);
 
 		$order['profile'] = $this->ion_auth->get_user($order['data']->user_id);
 
 		$params = array(
 				'stream' => 'product_order',
-				'namespace' => 'product_order',
+				'namespace' => 'streams',
 				'where' => "order_id = $id"
 			);
 		$order['orderproduct'] = $this->streams->entries->get_entries($params);

@@ -51,15 +51,15 @@
 	            <?php if(!empty($orderproduct['entries'])): 
 	            	foreach($orderproduct['entries'] as $items):?>
 	                <tr>
-		                <td><?php echo $items['produk_id']['product_code']; ?></td>
-		                <td><?php echo $this->settings->currency; ?> <?php echo number_format($items['harga'], 2, ",", "."); ?></td>
+		                <td><?php echo $items['product_id']['product_code']; ?></td>
+		                <td><?php echo $this->settings->currency; ?> <?php echo number_format($items['product_price'], 2, ",", "."); ?></td>
 		                <td><?php echo $items['qty']; ?></td>
 		                <td style="text-align:right"><?php echo $this->settings->currency; ?> <?php echo number_format($items['sub_total'], 2, ",", "."); ?></td>
 		            </tr>
 				<?php endforeach; endif; ?>	
 					<tr>
 						<td colspan="3"><strong>Total Bayar</strong></td>
-	                	<td style="text-align:right"><strong><?php echo $this->settings->currency; ?> <?php echo number_format($data->harga, 2, ",", "."); ?></strong></td>
+	                	<td style="text-align:right"><strong><?php echo $this->settings->currency; ?> <?php echo number_format($data->order_total, 2, ",", "."); ?></strong></td>
 	            	</tr>
 	        </tbody>
     	</table>
