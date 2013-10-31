@@ -26,6 +26,18 @@ class Order_m extends My_Model{
 
 	}
 
+	public function get_wilayah(){
+
+		$data = $this->db->distinct()->select('id, tujuan')->get('so_shipping')->result();
+		$wilayah = array();
+		foreach ($data as $value) {
+			$wilayah[$value->id] = $value->tujuan;
+		}
+		
+		return $wilayah;
+
+	}
+
 	public function get_shipping(){
 
 		$data = $this->db->distinct()->select('id, destination, shipping_cost')->get('so_shipping')->result();

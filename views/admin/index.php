@@ -15,7 +15,11 @@
                         <option value="sent">Terkirim</option>
                         <option value="cancel">Batal</option>
                     </select> 
+                </li>
 
+                <li>
+                    <label for="f_status">Filter By Wilayah: </label>
+                    <?php echo form_dropdown('wilayah', $wilayah, 'all', 'id="wilayah"'); ?>
                 </li>
             </ul>
         </fieldset>
