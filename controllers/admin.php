@@ -35,6 +35,8 @@ class Admin extends Admin_Controller {
 				);
 		$entries = $this->streams->entries->get_entries($params);
 
+		$order['wilayah'] = $this->order_m->get_wilayah();
+
 		$order['dataorder'] = $this->load->view('admin/order', array('entries'=>$entries), true);
 
 		$this->template->build('admin/index', $order);
