@@ -66,10 +66,10 @@ class Admin extends Admin_Controller {
 	public function edit($id = 0) {
 
 		$extra = array(
-            'return' => 'admin/so',
+            'return' => 'admin/order',
             'success_message' => lang('simple_order:success_message'),
             'failure_message' => lang('simple_order:failure_message'),
-            'title' => anchor('admin/so/edit/'.$id, 'Order').' &raquo; '.lang('simple_order:edit')
+            'title' => anchor('admin/order/edit/'.$id, 'Order').' &raquo; '.lang('simple_order:edit')
         );
 
         $skips = array();
@@ -98,7 +98,7 @@ class Admin extends Admin_Controller {
  //   		);
 		
 	// 	$this->streams->entries->update_entry($id, $entry_data, 'order', 'streams');
-	// 	redirect('admin/so');
+	// 	redirect('admin/order');
 
 	// }
 }

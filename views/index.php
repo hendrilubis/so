@@ -404,7 +404,7 @@
 
                 // 2. kirim data via ajax
                 $.ajax({
-                    url: "<?php echo site_url('so/simpanPesan'); ?>",
+                    url: "<?php echo site_url('order/simpanPesan'); ?>",
                     type: 'POST',
                     data: {ddata: $.cookie('ddata'), pdata: $.cookie('products'), edata: $.cookie('email')}
                 }).done(function(msg) {

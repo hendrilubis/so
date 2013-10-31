@@ -28,22 +28,22 @@ class Admin_area extends Admin_Controller {
         $extra['buttons'] = array(
             array(
                 'label' => lang('global:edit'),
-                'url' => 'admin/so/area/edit/-entry_id-'
+                'url' => 'admin/order/area/edit/-entry_id-'
             ),
             array(
                 'label' => lang('global:delete'),
-                'url' => 'admin/so/area/delete/-entry_id-',
+                'url' => 'admin/order/area/delete/-entry_id-',
                 'confirm' => true
             )
             
         );
-        $this->streams->cp->entries_table('shipping', 'shipping', 5, 'admin/so/area', true, $extra);
+        $this->streams->cp->entries_table('shipping', 'shipping', 5, 'admin/order/area', true, $extra);
 	}
 
 	public function create()
 	{
 		$extra = array(
-            'return' => 'admin/so/area',
+            'return' => 'admin/order/area',
             'success_message' => lang('simple_order:success_create'),
             'failure_message' => lang('simple_order:failure_create'),
             'title' => lang('simple_order:new_area'),
@@ -55,7 +55,7 @@ class Admin_area extends Admin_Controller {
 	public function edit($id = 0)
     {
         $extra = array(
-            'return' => 'admin/so/area',
+            'return' => 'admin/order/area',
             'success_message' => lang('simple_order:success_create'),
             'failure_message' => lang('simple_order:failure_create'),
             'title' => 'lang:simple_order:edit_area',
@@ -68,7 +68,7 @@ class Admin_area extends Admin_Controller {
     {
     	$this->streams->entries->delete_entry($id, 'shipping', 'shipping');
     	$this->session->set_flashdata('success', lang('simple_order:delete_success'));
-    	redirect('admin/so/area');
+    	redirect('admin/order/area');
     }
 
 }

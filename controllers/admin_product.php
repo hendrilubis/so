@@ -35,11 +35,11 @@ class Admin_product extends Admin_Controller{
         $extra['buttons'] = array(
             array(
                 'label' => lang('global:edit'),
-                'url' => 'so/admin_product/edit/-entry_id-'
+                'url' => 'admin/order/product/edit/-entry_id-'
             ),
             array(
                 'label' => lang('global:delete'),
-                'url' => 'so/admin_product/delete/-entry_id-',
+                'url' => 'admin/order/product/delete/-entry_id-',
                 'confirm' => true
             )
         );
@@ -48,13 +48,13 @@ class Admin_product extends Admin_Controller{
         // signals the function to use the template library to build the page
         // so we don't have to. If we had that set to false, the function
         // would return a string with just the form.
-        $this->streams->cp->entries_table('product', 'product', 10, 'so/admin_product/index', true, $extra);
+        $this->streams->cp->entries_table('product', 'product', 10, 'admin/order/product/index', true, $extra);
     }
 
     public function create(){
 
     	$extra = array(
-            'return' => 'so/admin_product/index',
+            'return' => 'admin/order/product/index',
             'success_message' => lang('simple_order:success_create'),
             'failure_message' => lang('simple_order:failure_create'),
             'title' => lang('simple_order:new'),
@@ -69,7 +69,7 @@ class Admin_product extends Admin_Controller{
     public function edit($id = 0){
 
     	 $extra = array(
-            'return' => 'so/admin_product/edit/'.$id,
+            'return' => 'admin/order/product/edit/'.$id,
             'success_message' => lang('simple_order:success_message'),
             'failure_message' => lang('simple_order:failure_message'),
             'title' => lang('simple_order:product_edit')
@@ -82,7 +82,7 @@ class Admin_product extends Admin_Controller{
         $this->streams->entries->delete_entry($id, 'product', 'product');
         $this->session->set_flashdata('success', lang('simple_order:product_delete'));
  
-        redirect('so/admin_product/index');
+        redirect('admin/order/product/index');
     }
 
 }

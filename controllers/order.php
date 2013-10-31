@@ -10,7 +10,7 @@
 **/
 
 
-class So extends Public_Controller {
+class Order extends Public_Controller {
 
 	public function __construct() {
 		parent::__construct();

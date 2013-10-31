@@ -26,7 +26,7 @@
 					<td><?php echo $item["alamat_kirim"]; ?></td>
 					<td><?php echo $this->settings->currency; ?> <?php echo number_format($item["harga"], 2, ",", "."); ?></td>
 					<td class="actions">
-						<?php echo anchor('admin/so/edit/'.$item["id"], lang('simple_order:edit'), array('class'=>'button', 'title'=>lang('simple_order:edit'))); ?>
+						<?php echo anchor('admin/order/edit/'.$item["id"], lang('simple_order:edit'), array('class'=>'button', 'title'=>lang('simple_order:edit'))); ?>
 					</td>
 				</tr>
 				<?php $i++; endforeach; else: ?> <div class="no_data"><?php echo lang('simple_order:no_items'); ?></div> <?php  endif; ?>

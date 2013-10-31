@@ -14,7 +14,7 @@
 **/
 
 
-class Module_So extends Module
+class Module_Order extends Module
 {
     public $version = '1.0.0';
 
@@ -33,26 +33,26 @@ class Module_So extends Module
             'sections' => array(
                 'order_product' => array(
                     'name' => 'Product Order',
-                    'uri' => 'admin/so',
+                    'uri' => 'admin/order',
                 ),
                 'product' => array(
                     'name' => 'Product List',
-                    'uri' => 'so/admin_product',
+                    'uri' => 'admin/order/product',
                     'shortcuts' => array(
                         'create' => array(
                             'name' => 'simple_order:new',
-                            'uri' => 'so/admin_product/create',
+                            'uri' => 'admin/order/product/create',
                             'class' => 'add'
                             )
                         )
                 ),
                 'area' => array(
                     'name' => 'Area',
-                    'uri' => 'admin/so/area',
+                    'uri' => 'admin/order/area',
                     'shortcuts' => array(
                         'create' => array(
                             'name' => 'simple_order:new_area',
-                            'uri' => 'admin/so/area/create',
+                            'uri' => 'admin/order/area/create',
                             'class' => 'add'
                             )
                         )

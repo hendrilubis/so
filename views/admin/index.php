@@ -31,7 +31,7 @@
             if(oldstatus != status){
                 $('#stream-table').css('opacity', '.5');
                 $.ajax({
-                    url: BASE_URL + 'admin/so/order/' + $(this).val(),
+                    url: BASE_URL + 'admin/order/order/' + $(this).val(),
                     type: 'POST',
                     data: {status: $('#status').val()}
                 }).done(function(res){
