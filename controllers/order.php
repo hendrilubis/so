@@ -14,13 +14,15 @@ class Order extends Public_Controller {
 
 	public function __construct() {
 		parent::__construct();
-		$this->template->append_css('module::jquery.steps.css');
-		$this->template->append_js('module::kampret.js');
+		
+		$this->template->append_css('module::jquery.stepy.css');
 		$this->template->append_js('module::jquery.cookie-1.4.0.js');
+		$this->template->append_js('module::jquery.validate.min.js');
+		$this->template->append_js('module::jquery.stepy.js');
+
 		$this->load->model('order_m');
 		$this->load->helper('string');
 		$this->load->helper('url');
-		// $this->template->append_js('module::jquery.steps.min.js');
 	}
 
 
@@ -162,7 +164,12 @@ class Order extends Public_Controller {
 			}
 			// echo site_url();
 			echo 'sukses';
-		}
 
+		} else
+			redirect('order');
+	}
+
+	function selesai(){
+		echo 'taraaa';
 	}
 }

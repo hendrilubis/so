@@ -1,0 +1,50 @@
+@CHARSET "UTF-8";
+
+body { font-size: 10px }
+
+.stepy-header { list-style: none; padding: 0; width: 100%; margin: 20px 20px 0 20px; }
+  .stepy-header li { cursor: pointer; display: inline-block; margin: 0 5px 0 0;}
+    .stepy-header li.stepy-error { background: url('../img/error.png') no-repeat right top; }
+    .stepy-header li div { color: #999; font: bold 1.8em verdana; background: rgb(238, 238, 238); padding: 10px 15px; border-radius: 5px 5px 0 0; 
+      background-image:-webkit-linear-gradient(90deg,rgb(230,230,230) 0%,rgb(255,255,255) 31%,#fff 100%);
+      background-image:-moz-linear-gradient(90deg,rgb(230,230,230) 0%,rgb(255,255,255) 31%,#fff 100%);
+      background-image:-o-linear-gradient(90deg,rgb(230,230,230) 0%,rgb(255,255,255) 31%,#fff 100%);
+      background-image:-ms-linear-gradient(90deg,rgb(230,230,230) 0%,rgb(255,255,255) 31%,#fff 100%);
+    }
+    .stepy-header li.stepy-active {  }
+    .stepy-header li.stepy-active div { color: #369; cursor: auto; background: #fff; }
+    .stepy-header li span { color: #CCC; font: 1.4em verdana }
+    .stepy-header li.stepy-active span { color: #BBB }
+
+    .error {
+      padding: 8px 35px 8px 14px;
+      margin-bottom: 0;
+      text-shadow: 0 1px 0 rgba(255, 255, 255, 0.5);
+      background-color: rgb(252, 248, 227);
+      border: 1px solid rgb(251, 238, 213);
+      color: #333;
+    }
+
+.stepy-step { clear: left; padding: 15px 20px; width: 600px; background: #fff; color: #333; font-size: 14px;}
+  .stepy-step legend { color: #4080BF; font: bold 1.8em arial; letter-spacing: .7px; padding: 0 2px 3px; display: none; }
+  .stepy-step label { color: #222; display: block; font: bold 1.5em arial; letter-spacing: .7px; margin: 10px 0 3px 1px }
+
+  .stepy-step select { height: 34px; padding-top: 5px }
+
+  .stepy-step textarea { height: 100px }
+
+  .stepy-navigator { height: 33px; margin-top: 20px }
+    .button-back { float: left }
+
+    .button-next,
+    .stepy-navigator input[type="submit"] { float: right }
+
+    .button-back,
+    .button-next,
+    .stepy-navigator input[type="submit"] { border: 1px solid #CCC; color: steelblue; cursor: pointer; font: 1.2em verdana; padding: 7px 15px 8px; text-decoration: none; -khtml-border-radius: 3px; -moz-border-radius: 3px; -opera-border-radius: 3px; -webkit-border-radius: 3px; border-radius: 3px }
+
+    .stepy-navigator input[type="submit"] { background-color: transparent; border-color: #CCC; margin-bottom: 0; width: 90px }
+
+    .button-back:hover,
+    .button-next:hover,
+    .stepy-navigator input[type="submit"]:hover { border-color: #BBB; color: #B07 }
