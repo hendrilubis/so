@@ -7,7 +7,7 @@
 * @category events
 * @author PyroCMS Dev Team
 */
-class Events_so{
+class Events_Order{
 
 	protected $ci;
 
