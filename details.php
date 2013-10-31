@@ -116,6 +116,7 @@ class Module_Order extends Module
         $fields[] = array('name'=>'User ID', 'slug'=>'user_id', 'type'=>'relationship', 'required' => true, 'unique' => false, 'instructions' => '', 'extra'=>array("choose_stream"=>"3", "link_uri"=>null));
         $fields[] = array('name'=>'Order Status', 'slug'=>'order_status', 'type'=>'choice', 'required' => true, 'unique' => false, 'instructions' => 'Pilih Status Pengiriman Product', 'extra'=>array("choice_data"=>"pending : Belum Bayar\npaid : Sudah Bayar\nsent : Terkirim\ncancel : Batal", "choice_type"=>"dropdown", "default_value"=>"pending", "min_choices"=>"", "max_choices"=>""));
         $fields[] = array('name'=>'Shipping Address', 'slug'=>'shipping_address', 'type'=>'text', 'required' => false, 'unique' => false, 'instructions' => 'Isikan alamat untuk buku dikirimkan', 'extra'=>array("max_length"=>"255", "default_value"=>""));
+        $fields[] = array('name'=>'Province', 'slug'=>'province', 'type'=>'text', 'required' => false, 'unique' => false, 'instructions' => '', 'extra'=>array("max_length"=>"50", "default_value"=>""));
         $fields[] = array('name'=>'Order Total', 'slug'=>'order_total', 'type'=>'integer', 'required' => true, 'unique' => false, 'instructions' => 'Total Harga', 'extra'=>array("max_length"=>"255", "default_value"=>""));
 
         // Combine
