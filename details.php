@@ -179,6 +179,12 @@ class Module_Order extends Module
         // Add fields to stream
         $this->streams->fields->add_fields($fields);
 
+        // insert sample area
+        $message = array('destination' => 'Jabodetabek','shipping_cost' => 0);
+        $this->streams->entries->insert_entry($message, 'shipping', 'streams');
+        $message = array('destination' => 'Luar Jabodetabek','shipping_cost' => 10000);
+        $this->streams->entries->insert_entry($message, 'shipping', 'streams');
+
 
         /* TRYOUT_ORDER STREAM */
         $namespace = 'streams';
