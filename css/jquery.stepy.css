@@ -1,7 +1,3 @@
-@CHARSET "UTF-8";
-
-body { font-size: 10px }
-
 .stepy-header { list-style: none; padding: 0; width: 100%; margin: 20px 20px 0 20px; }
   .stepy-header li { cursor: pointer; display: inline-block; margin: 0 5px 0 0;}
     .stepy-header li.stepy-error { background: url('../img/error.png') no-repeat right top; }

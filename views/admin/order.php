@@ -21,7 +21,7 @@
 				<?php if(!empty($entries["entries"])): $i=1; foreach( $entries["entries"] as $item ): ?>
 				<tr id="item_<?php echo $item["id"]; ?>">
 					<td><?php echo $i; ?></td>
-					<td><?php echo $item["created_by"]["display_name"]; ?></td>
+					<td><?php echo $item["user_id"]["first_name"].' '.$item["user_id"]["last_name"]; ?></td>
 					<td><?php echo $item["order_status"]["value"]; ?></td>
 					<td><?php echo $item["shipping_address"]; ?></td>
 					<td><?php echo $this->settings->currency; ?> <?php echo number_format($item["order_total"], 2, ",", "."); ?></td>

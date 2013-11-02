@@ -28,10 +28,10 @@ class Order_m extends My_Model{
 
 	public function get_wilayah(){
 
-		$data = $this->db->distinct()->select('id, tujuan')->get('so_shipping')->result();
+		$data = $this->db->distinct()->select('id, destination')->get('so_shipping')->result();
 		$wilayah = array();
 		foreach ($data as $value) {
-			$wilayah[$value->id] = $value->tujuan;
+			$wilayah[$value->id] = $value->destination;
 		}
 		
 		return $wilayah;

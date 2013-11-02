@@ -41,6 +41,7 @@ class Order extends Public_Controller {
 	}
 
 	public function simpanPesan(){
+		$this->load->library('email');
 		if('$_POST'){
 			//Menangkap data yang dilempar oleh ajax
 			$data['datadiri'] = json_decode($this->input->post('ddata'));
@@ -56,6 +57,7 @@ class Order extends Public_Controller {
 									'display_name' => $data['datadiri']->namaDepan.' '.$data['datadiri']->namaBelakang,
 									// tambahan field
 									'alamat' => $data['datadiri']->alamat,
+									'phone' => $data['datadiri']->telepon,
 									'sekolah' => $data['datadiri']->sekolah,
 									'provinsi' => $data['datadiri']->provinsi,
 									'alamat_sekolah' => $data['datadiri']->alamatSekolah,
@@ -68,6 +70,7 @@ class Order extends Public_Controller {
 			// perhitungan harga
 
 			$produk = array();
+			$emailed_produk = array();
 			$total = 0;
 
 			/* Logic untuk menghitung total biaya */
@@ -81,7 +84,7 @@ class Order extends Public_Controller {
 					$tglPromo = date('Y-m-d', strtotime($dataProduk->promo_deadline));
 					
 					// cek apakah mesti pake harga kolektif, promo, atau harga biasa
-					if($value->product_qty > 5){ 
+					if($value->product_qty >= 5){ 
 						$harga = $dataProduk->collective_price;
 					}elseif($tglSekarang <= $tglPromo){
 						$harga = $dataProduk->promo_price;
@@ -96,12 +99,12 @@ class Order extends Public_Controller {
 
 					$subtotal = $harga * $value->product_qty;					
 
-					$produk[] = array(
+					$emailed_produk[] = $produk[] = array(
 						'product_id' => $value->product_id,
 						'product_price' => $harga,
 						'qty' => $value->product_qty,
 						'sub_total' => $subtotal
-						);
+						) + array('product_name' => $value->product_name);
 
 					$total += $subtotal;
 				}
@@ -111,19 +114,43 @@ class Order extends Public_Controller {
 			$order = array(
 				'order_status' => "pending",
 				'shipping_address' => $data['datadiri']->alamat,
+				'phone' => $data['datadiri']->telepon,
+				'province' => $data['datadiri']->provinsi,
 				'user_id' => $userId,
-				'order_total' => $total
+				'order_total' => $total + intval(substr($data['datadiri']->telepon, -3))
 				);
-			$order_id = $this->streams->entries->insert_entry($order, 'order', 'streams');
+			$order['order_id'] = $this->streams->entries->insert_entry($order, 'order', 'streams');
+
+			$this->session->set_userdata('total', $order['order_total']);
 
 			// sisipkan order_id di setiap daftar produk buat dimasukin ke tabel product_order
 			$produk_order = array();
 			foreach ($produk as $value) {
-				$produk_order = $value + array('order_id' => $order_id);
+				$produk_order = $value + array('order_id' => $order['order_id']);
 				$this->streams->entries->insert_entry($produk_order, 'product_order', 'streams');
 			}
 
-			print_r($produk_order);
+			// ambil data order settings
+			$settings = $this->streams->entries->get_entry(1, 'order_settings', 'streams');
+
+			// // Kirim email invoice pemesanan
+			// $sendemail['subject']    = $this->settings->site_name . ' - Invoice Pemesanan';
+			// $sendemail['slug']       = 'invoice-pemesanan';
+			// $sendemail['to']         = $data['datadiri']->emailPrimer;
+			// $sendemail['from']       = $this->settings->server_email;
+			// $sendemail['name']       = $this->settings->site_name;
+			// $sendemail['reply-to']   = $this->settings->contact_email;
+   //      	// Add in some extra details
+			// $sendemail['address']	= $order['shipping_address'];
+			// $sendemail['total']		= $order['order_total'];
+			// $sendemail['produk'] 	= $emailed_produk;
+			// $sendemail['bank']		= $settings->bank;
+			// $sendemail['no_rekening'] = $settings->no_rekening;
+			// $sendemail['owner_rek'] = $settings->owner_rek;
+			// $sendemail['telepon_konfirmasi'] = $settings->telepon_konfirmasi;
+   //      	// send the email using the template event found in system/cms/templates/
+			// Events::trigger('email', $sendemail, 'array');
+
 
 			foreach($data['dataemail'] as $email){
 
@@ -144,7 +171,7 @@ class Order extends Public_Controller {
 					$akun = array(
 						'user_id' => $uid,
 						'product_id' => $email->type,
-						'order_id' => $order_id,
+						'order_id' => $order['order_id'],
 						'user_email'=> $email->email,
 						'generated_key' => $password
 						);
@@ -153,7 +180,7 @@ class Order extends Public_Controller {
 					$akun = array(
 						'user_id' => $userId,
 						'product_id' => $email->type,
-						'order_id' => $order_id,
+						'order_id' => $order['order_id'],
 						'user_email'=> $email->email,
 						'generated_key' => $pwprimer
 						);
@@ -162,7 +189,7 @@ class Order extends Public_Controller {
 				// simpan data akun tryout di tabel to_order
 				$this->streams->entries->insert_entry($akun, 'to_order', 'streams');
 			}
-			// echo site_url();
+
 			echo 'sukses';
 
 		} else
@@ -170,6 +197,25 @@ class Order extends Public_Controller {
 	}
 
 	function selesai(){
-		echo 'taraaa';
+		$total = $this->session->userdata('total');
+		// $total = 453346;
+		if($total){
+			$messages = $this->streams->entries->get_entry(1, 'order_settings', 'streams');
+			$order = array(
+				'bank' => $messages->bank,
+				'no_rekening' => $messages->no_rekening,
+				'owner_rek' => $messages->owner_rek,
+				'telepon_konfirmasi' => $messages->telepon_konfirmasi,
+				'total' => $this->settings->currency.' '.number_format($total, 2, ",",".")
+				);
+			$message = str_replace(array("[[","]]"), array("{{", "}}"), $messages->closing_message);
+
+			$this->session->unset_userdata('total');
+			$this->template
+			->set('closing_message', $this->parser->parse_string($message, $order, true))
+			->build('selesai');
+
+		} else
+		redirect();
 	}
 }

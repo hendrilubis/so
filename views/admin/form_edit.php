@@ -14,9 +14,11 @@
                 		<dt>Nama Pemesan</dt>
                 		<dd><?php echo $profile->first_name.' '.$profile->last_name; ?></dd>
                 		<dt>Alamat Email</dt>
-                		<dd><?php echo $data->created_by_email; ?></dd>
+                		<dd><?php echo $profile->email; ?></dd>
                     	<dt>Alamat Kirim</dt>
-                    	<dd><?php echo $data->alamat_kirim; ?></dd>
+                    	<dd><?php echo $data->shipping_address; ?></dd>
+                    	<dt>No. Telepon</dt>
+                    	<dd><?php echo $data->phone; ?></dd>
                     </td>
                     <td>
                     	<dt>Sekolah</dt>
@@ -24,7 +26,7 @@
                     	<dt>Alamat Sekolah</dt>
                     	<dd><?php echo $profile->alamat_sekolah; ?></dd>
                     	<dt>Provinsi</dt>
-                    	<dd><?php echo $profile->provinsi; ?></dd>
+                    	<dd><?php echo $data->province; ?></dd>
                 	</td>
                     <td><?php echo $form; ?></td>
                 </tr>

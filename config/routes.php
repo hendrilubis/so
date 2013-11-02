@@ -2,3 +2,4 @@
 
 $route['order/admin/product(/:any)?'] = 'admin_product$1';
 $route['order/admin/area(/:any)?'] = 'admin_area$1';
+$route['order/admin/settings(/:any)?'] = 'admin_settings$1';

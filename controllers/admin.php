@@ -75,7 +75,7 @@ class Admin extends Admin_Controller {
         );
 
         $skips = array();
-        $hidden = array( 'user_id', 'harga', 'product_id', 'alamat_kirim');
+        $hidden = array( 'user_id', 'order_total', 'product_id', 'shipping_address', 'province', 'phone');
 
         $order['form'] = $this->streams->cp->entry_form('order', 'streams', 'edit', $id, false, $extra, $skips, false, $hidden);
 

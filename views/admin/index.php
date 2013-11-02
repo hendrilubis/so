@@ -8,7 +8,7 @@
             <legend>Filters</legend>
             <ul>
                 <li class="">
-                    <label for="f_status">Filter By: </label>
+                    <label for="f_status">Status: </label>
                     <select name="status" id="status">
                         <option value="Pending">Belum Bayar</option>
                         <option value="paid">Sudah Bayar</option>
@@ -18,7 +18,7 @@
                 </li>
 
                 <li>
-                    <label for="f_status">Filter By Wilayah: </label>
+                    <label for="f_status">Wilayah: </label>
                     <?php echo form_dropdown('wilayah', $wilayah, 'all', 'id="wilayah"'); ?>
                 </li>
             </ul>
