@@ -48,24 +48,34 @@ class Order extends Public_Controller {
 			$data['dataproduk'] = json_decode($this->input->post('pdata'));
 			$data['dataemail'] = json_decode($this->input->post('edata'));
 
+
 			//meregistrasikan email user
 			$username = str_replace("@", "-", $data['datadiri']->emailPrimer);
 			$pwprimer = random_string("alnum", 11);
 			$additional_data = array(
-									'first_name' => $data['datadiri']->namaDepan,
-									'last_name' => $data['datadiri']->namaBelakang,
-									'display_name' => $data['datadiri']->namaDepan.' '.$data['datadiri']->namaBelakang,
+				'first_name' => $data['datadiri']->namaDepan,
+				'last_name' => $data['datadiri']->namaBelakang,
+				'display_name' => $data['datadiri']->namaDepan.' '.$data['datadiri']->namaBelakang,
 									// tambahan field
-									'alamat' => $data['datadiri']->alamat,
-									'phone' => $data['datadiri']->telepon,
-									'sekolah' => $data['datadiri']->sekolah,
-									'provinsi' => $data['datadiri']->provinsi,
-									'alamat_sekolah' => $data['datadiri']->alamatSekolah,
-									);
-			$userId = $this->ion_auth->register($username, $pwprimer, $data['datadiri']->emailPrimer, null, $additional_data, 'user');
+				'alamat' => $data['datadiri']->alamat,
+				'phone' => $data['datadiri']->telepon,
+				'sekolah' => $data['datadiri']->sekolah,
+				'provinsi' => $data['datadiri']->provinsi,
+				'alamat_sekolah' => $data['datadiri']->alamatSekolah,
+				'lang' => 'en'
+			);
 
-			// nonaktifkan dulu sampai si customer bayar
-			$this->ion_auth->deactivate($userId);
+			// jika user belum terdaftar
+			if(! $user = $this->ion_auth->get_user_by_email($data['datadiri']->emailPrimer)){
+				$userId = $this->ion_auth->register($username, $pwprimer, $data['datadiri']->emailPrimer, null, $additional_data, 'user');
+
+				// nonaktifkan dulu sampai si customer bayar
+				$this->ion_auth->deactivate($userId);
+
+			} else {
+				$userId = $user->id;
+				$this->ion_auth->update_user($userId, array('password'=>$pwprimer), $additional_data);
+			}
 
 			// perhitungan harga
 
@@ -99,12 +109,13 @@ class Order extends Public_Controller {
 
 					$subtotal = $harga * $value->product_qty;					
 
-					$emailed_produk[] = $produk[] = array(
+					$produk[] = array(
+						'product_name' => $value->product_name,
 						'product_id' => $value->product_id,
 						'product_price' => $harga,
 						'qty' => $value->product_qty,
 						'sub_total' => $subtotal
-						) + array('product_name' => $value->product_name);
+					);
 
 					$total += $subtotal;
 				}
@@ -127,6 +138,7 @@ class Order extends Public_Controller {
 			$produk_order = array();
 			foreach ($produk as $value) {
 				$produk_order = $value + array('order_id' => $order['order_id']);
+				unset($produk_order['product_name']);
 				$this->streams->entries->insert_entry($produk_order, 'product_order', 'streams');
 			}
 
@@ -155,18 +167,41 @@ class Order extends Public_Controller {
 			foreach($data['dataemail'] as $email){
 
 				if($email->email != $data['datadiri']->emailPrimer){
-					// daftarkan email pesanan produk menjadi user register
+
 					$username = str_replace("@", "-", $email->email);
 					$password = random_string("alnum", 11);
-					$additional_data = array(
+
+					// jika user belum terdaftar
+					if(! $user = $this->ion_auth->get_user_by_email($email->email)){
+						$additional = array(
 						'display_name' => "Nama Anda",
 						'first_name' => "Nama",
-						'last_name' => "Anda"
+						'last_name' => "Anda",
+						'lang' => 'en'
 						);
-					$uid = $this->ion_auth->register($username, $password, $email->email, null, $additional_data, 'user');
 
-					// nonaktifkan dulu sampai si customer bayar
-					$this->ion_auth->deactivate($uid);
+						// daftarkan email pesanan produk menjadi user register
+						$uid = $this->ion_auth->register($username, $password, $email->email, null, $additional, 'user');
+
+						// nonaktifkan dulu sampai si customer bayar
+						$this->ion_auth->deactivate($uid);
+
+					} else {
+						$uid = $user->id;
+						$additional = array(
+							'display_name' => $user->display_name,
+							'first_name' => $user->first_name,
+							'last_name' => $user->last_name,
+							'lang' => $user->lang,
+							'alamat' => $user->alamat,
+							'phone' => $user->phone,
+							'sekolah' => $user->sekolah,
+							'provinsi' => $user->provinsi,
+							'alamat_sekolah' => $user->alamat_sekolah,
+						);
+						$this->ion_auth->update_user($uid, array('password'=>$password), $additional);
+					}
+
 
 					$akun = array(
 						'user_id' => $uid,
