@@ -24,7 +24,7 @@ class Events_Order{
 		if($data['stream']->stream_slug == 'order')
 		{
 			// kalo order sudah dibayar
-			if($data['update_data']['status'] == 'paid')
+			if($data['update_data']['order_status'] == 'paid')
 			{
 				$this->ci->load->driver('Streams');
 				$this->ci->load->model('order_m');
@@ -32,7 +32,7 @@ class Events_Order{
 				// ambil produk tryout apa saja yang dipesan
 				$params = array(
 						'stream' => 'to_order',
-						'namespace' => 'to_order',
+						'namespace' => 'streams',
 						'where' => "order_id = {$data['entry_id']}"
 						);
 				$to_order = $this->ci->streams->entries->get_entries($params);
@@ -46,7 +46,7 @@ class Events_Order{
 						$this->ci->ion_auth->activate($order['user_id']['id']);
 
 						// ambil paket_id untuk setiap produk try out
-						$paket = $this->ci->order_m->get_paket_id($order['produk_id']['id']);
+						$paket = $this->ci->order_m->get_paket_id($order['product_id']['id']);
 
 						// lalu simpan data ke tabel to_user #belumsukses
 						foreach ($paket as $pkt)
