@@ -76,10 +76,13 @@ class Module_Order extends Module
     {
         $this->load->driver('Streams');
 
+        // Get user profile stream
+        $profile = $this->streams->streams->get_stream('profiles', 'users');
+
         /* PRODUCT STREAM =============================== */
         $namespace = 'streams';
         // Create stream
-        $extra = array('title_column' => 'product_code', 'view_options' => array("created_by","product_code","product_type","price","promo_price","promo_deadline","collective_price"), 'sorting' => 'title', 'menu_path' => '', 'is_hidden' => 'no');
+        $extra = array('title_column' => 'product_code', 'view_options' => array('product_code','product_type','price','promo_price','promo_deadline','collective_price'), 'sorting' => 'title', 'menu_path' => '', 'is_hidden' => 'no');
         if( !$this->streams->streams->add_stream('Product', 'product', $namespace, 'so_', 'stream untuk kumpulan produk', $extra) ) return FALSE; 
 
         // Get stream data
@@ -107,7 +110,7 @@ class Module_Order extends Module
         /* ORDER STREAM */
         $namespace = 'streams';
         // Create stream
-        $extra = array('title_column' => '', 'view_options' => array("product_code","product_type","price","promo_price","promo_deadline","collective_price"), 'sorting' => 'title', 'menu_path' => '', 'is_hidden' => 'no');
+        $extra = array('title_column' => '', 'view_options' => array("user_id","order_status","province","order_total"), 'sorting' => 'title', 'menu_path' => '', 'is_hidden' => 'no');
         if( !$this->streams->streams->add_stream('Order', 'order', $namespace, 'so_', 'stream untuk pemesanan produk', $extra) ) return FALSE; 
 
         // Get stream data
@@ -117,7 +120,7 @@ class Module_Order extends Module
         $fields   = array();
         $template = array('namespace' => $namespace, 'assign' => 'order');
 
-        $fields[] = array('name'=>'User ID', 'slug'=>'user_id', 'type'=>'relationship', 'required' => true, 'unique' => false, 'instructions' => '', 'extra'=>array("choose_stream"=>"3", "link_uri"=>null));
+        $fields[] = array('name'=>'User ID', 'slug'=>'user_id', 'type'=>'relationship', 'required' => true, 'unique' => false, 'instructions' => '', 'extra'=>array("choose_stream"=>$profile->id, "link_uri"=>null));
         $fields[] = array('name'=>'Order Status', 'slug'=>'order_status', 'type'=>'choice', 'required' => true, 'unique' => false, 'instructions' => 'Pilih Status Pengiriman Product', 'extra'=>array("choice_data"=>"pending : Belum Bayar\npaid : Sudah Bayar\nsent : Terkirim\ncancel : Batal", "choice_type"=>"dropdown", "default_value"=>"pending", "min_choices"=>"", "max_choices"=>""));
         $fields[] = array('name'=>'Shipping Address', 'slug'=>'shipping_address', 'type'=>'text', 'required' => false, 'unique' => false, 'instructions' => 'Isikan alamat untuk buku dikirimkan', 'extra'=>array("max_length"=>"255", "default_value"=>""));
         $fields[] = array('name'=>'No Telepon', 'slug'=>'phone', 'type'=>'text', 'required' => true, 'unique' => false, 'instructions' => 'Nomor telepon/hp yang dapat dihubungi', 'extra'=>array("max_length"=>"15", "default_value"=>"000"));
@@ -199,7 +202,7 @@ class Module_Order extends Module
         $fields   = array();
         $template = array('namespace' => $namespace, 'assign' => 'to_order');
 
-        // $fields[] = array('name'=>'Tryout User', 'slug'=>'user_id', 'type'=>'relationship', 'required' => true, 'unique' => false, 'instructions' => '', 'extra'=>array("choose_stream"=>"3", "link_uri"=>null));
+        // $fields[] = array('name'=>'Tryout User', 'slug'=>'user_id', 'type'=>'relationship', 'required' => true, 'unique' => false, 'instructions' => '', 'extra'=>array("choose_stream"=>$profile->id, "link_uri"=>null));
         // $fields[] = array('name'=>'Product ID', 'slug'=>'product_id', 'type'=>'relationship', 'required' => true, 'unique' => false, 'instructions' => 'Produk bertipe try out', 'extra'=>array("choose_stream"=>$product->id, "link_uri"=>null));
         // $fields[] = array('name'=>'Order ID', 'slug'=>'order_id', 'type'=>'relationship', 'required' => true, 'unique' => false, 'instructions' => 'Id pesanan', 'extra'=>array("choose_stream"=>$order->id, "link_uri"=>null));
         $fields[] = array('name'=>'User Email', 'slug'=>'user_email', 'type'=>'email', 'required' => true, 'unique' => true, 'instructions' => 'Email user yang memesan untuk nantinya diregistrasikan sebagai user setelah bayar pemesanan', 'extra'=>false);

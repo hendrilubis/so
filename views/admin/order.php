@@ -18,7 +18,9 @@
 				</tr>
 			</tfoot>
 			<tbody>
-				<?php if(!empty($entries["entries"])): $i=1; foreach( $entries["entries"] as $item ): ?>
+				<?php if(!empty($entries["entries"])): 
+				$i=1; 
+				foreach( $entries["entries"] as $item ): ?>
 				<tr id="item_<?php echo $item["id"]; ?>">
 					<td><?php echo $i; ?></td>
 					<td><?php echo $item["user_id"]["first_name"].' '.$item["user_id"]["last_name"]; ?></td>

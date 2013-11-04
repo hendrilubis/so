@@ -251,6 +251,6 @@ class Order extends Public_Controller {
 			->build('selesai');
 
 		} else
-		redirect();
+		redirect('order');
 	}
 }

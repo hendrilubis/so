@@ -44,11 +44,10 @@ class Admin extends Admin_Controller {
 
 
 	public function order() {
-
 		$where = '';
 
 		if($this->input->post('status')){
-			$where .= SITE_REF."_so_order.status= '".$this->input->post('status')."' ";
+			$where .= SITE_REF."_so_order.order_status = '".$this->input->post('status')."' ";
 		}
 
 		$params = array(
