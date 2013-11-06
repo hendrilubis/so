@@ -4,7 +4,7 @@
         <h1>Form Pemesanan</h1>
     </div>
     <div class="content"> 
-        <form action="<?php echo site_url('order/selesai'); ?>" method="post" id="wizard" style="padding: 0 20px 20px;">
+        <form action="<?php echo site_url('order/simpanPesan'); ?>" method="post" id="wizard" style="padding: 0 20px 20px;">
             <div class="stepy-error"></div>
             <fieldset title="Pilih Produk">
                 <legend>Pilih Produk</legend>
@@ -197,6 +197,10 @@
                     </tbody>
                 </table>
             </fieldset>
+
+            <input type="hidden" name="ddata" id="ddata">
+            <input type="hidden" name="pdata" id="pdata">
+            <input type="hidden" name="edata" id="edata">
 
             <input type="submit" value="Selesai" class="button" />
         </form>
@@ -443,6 +447,10 @@
                             }
                     }
 
+                    // pasang di input hidden
+                    $('#pdata').val(JSON.stringify(pdata));
+                    $('#ddata').val(JSON.stringify(ddata));
+                    $('#edata').val(JSON.stringify(edata));
                 }
 
                 // buat percobaan debugging
@@ -459,14 +467,15 @@
             },
 
             finish: function(index) {
-                $.ajax({
-                    url: "<?php echo site_url('order/simpanPesan'); ?>",
-                    type: 'POST',
-                    data: {ddata: JSON.stringify(ddata), pdata:JSON.stringify(pdata), edata: JSON.stringify(edata)}
-                }).done(function(msg) {
-                    console.log("selesai " + msg);
-                    return true;
-                });
+                return true;
+                // $.ajax({
+                //     url: "<?php echo site_url('order/simpanPesan'); ?>",
+                //     type: 'POST',
+                //     data: {ddata: JSON.stringify(ddata), pdata:JSON.stringify(pdata), edata: JSON.stringify(edata)}
+                // }).done(function(msg) {
+                //     console.log("selesai " + msg);
+                //     return true;
+                // });
             },
 
             backLabel: "&laquo; Sebelumnya",

@@ -225,8 +225,7 @@ class Order extends Public_Controller {
 				$this->streams->entries->insert_entry($akun, 'to_order', 'streams');
 			}
 
-			echo 'sukses';
-
+			redirect('order/selesai');
 		} else
 			redirect('order');
 	}
