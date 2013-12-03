@@ -93,6 +93,14 @@ class Admin extends Admin_Controller {
 
 	}
 
+	function delete_order($order_id){
+		$this->db->delete('so_order', array('id', $order_id));
+		$this->db->delete('so_product_order', array('order_id', $order_id));
+		$this->db->delete('so_to_order', array('order_id', $order_id));
+
+		redirect(getenv('HTTP_REFERER'));
+	}
+
 	// public function update($id, $update){
 	// 	$entry_data = array(
  //        	'status'    => $update

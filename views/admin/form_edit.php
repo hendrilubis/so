@@ -17,14 +17,12 @@
                 		<dd><?php echo $profile->email; ?></dd>
                     	<dt>Alamat Kirim</dt>
                     	<dd><?php echo $data->shipping_address; ?></dd>
-                    	<dt>No. Telepon</dt>
-                    	<dd><?php echo $data->phone; ?></dd>
                     </td>
                     <td>
+                    	<dt>No. Telepon</dt>
+                    	<dd><?php echo $data->phone; ?></dd>
                     	<dt>Sekolah</dt>
                     	<dd><?php echo $profile->sekolah; ?></dd>
-                    	<dt>Alamat Sekolah</dt>
-                    	<dd><?php echo $profile->alamat_sekolah; ?></dd>
                     	<dt>Provinsi</dt>
                     	<dd><?php echo $data->province; ?></dd>
                 	</td>
@@ -65,6 +63,10 @@
 	            	</tr>
 	        </tbody>
     	</table>
+        <br>
+        <div class="buttons" style="clear:both; text-align: right;">
+            <a href="<?php echo site_url('admin/order/delete_order/'.$data->id); ?>" class="button grey confirm">Hapus Order</a>
+        </div>
     </div>
 </section>
 

@@ -83,7 +83,7 @@
                             <td><input type="telepon" class="span5 telepon" name="telepon" required></td>
                         </tr>
                         <tr>
-                            <td>Alamat Kirim</td>
+                            <td>Alamat Pengiriman Buku (utamakan alamat sekolah)</td>
                             <td><textarea class="span5 alamat" name="alamat" class="input-large" rows="3" required></textarea></td>
                         </tr>
                         <tr>
@@ -101,9 +101,39 @@
                             <td>Provinsi Sekolah</td>
                             <td>
                                 <select class="span5 provinsi" name="provinsi" id="provinsi" required>
-                                    <option value="jabar">Jawa Barat</option>
-                                    <option value="jateng">Jawa Tengah</option>
-                                    <option value="jatim">Jawa Timur</option>
+                                    <option value="Aceh">Aceh</option>
+                                    <option value="Bali">Bali</option>
+                                    <option value="Bangka Belitung">Bangka Belitung</option>
+                                    <option value="Banten">Banten</option>
+                                    <option value="Bengkulu">Bengkulu</option>
+                                    <option value="Gorontalo">Gorontalo</option>
+                                    <option value="Jakarta">Jakarta</option>
+                                    <option value="Jambi">Jambi</option>
+                                    <option value="Jawa Barat">Jawa Barat</option>
+                                    <option value="Jawa Tengah">Jawa Tengah</option>
+                                    <option value="Jawa Timur">Jawa Timur</option>
+                                    <option value="Kalimantan Barat">Kalimantan Barat</option>
+                                    <option value="Kalimantan Selatan">Kalimantan Selatan</option>
+                                    <option value="Kalimantan Tengah">Kalimantan Tengah</option>
+                                    <option value="Kalimantan Timur">Kalimantan Timur</option>
+                                    <option value="Kepulauan Riau">Kepulauan Riau</option>
+                                    <option value="Lampung">Lampung</option>
+                                    <option value="Maluku">Maluku</option>
+                                    <option value="Maluku Utara">Maluku Utara</option>
+                                    <option value="Nusa Tenggara Barat">Nusa Tenggara Barat</option>
+                                    <option value="Nusa Tenggara Timur">Nusa Tenggara Timur</option>
+                                    <option value="Papua">Papua</option>
+                                    <option value="Papua Barat">Papua Barat</option>
+                                    <option value="Riau">Riau</option>
+                                    <option value="Sulawesi Barat">Sulawesi Barat</option>
+                                    <option value="Sulawesi Selatan">Sulawesi Selatan</option>
+                                    <option value="Sulawesi Tengah">Sulawesi Tengah</option>
+                                    <option value="Sulawesi Tenggara">Sulawesi Tenggara</option>
+                                    <option value="Sulawesi Utara">Sulawesi Utara</option>
+                                    <option value="Sumatera Barat">Sumatra Barat</option>
+                                    <option value="Sumatera Selatan">Sumatra Selatan</option>
+                                    <option value="Sumatera Utara">Sumatra Utara</option>
+                                    <option value="Yogyakarta">Yogyakarta</option>
                                 </select>
                             </td>
                         </tr>

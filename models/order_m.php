@@ -88,4 +88,12 @@ class Order_m extends My_Model{
 				->where('produk_id', $product_id)
 				->get()->result();
 	}
+
+	function cek_to_user($paket_id, $user_id)
+	{
+		return $this->db->from('so_to_user')
+				->where('paket_id', $paket_id)
+				->where('user_id', $user_id)
+				->get()->row();
+	}
 }

@@ -80,7 +80,6 @@ class Order extends Public_Controller {
 			// perhitungan harga
 
 			$produk = array();
-			$emailed_produk = array();
 			$total = 0;
 
 			/* Logic untuk menghitung total biaya */
@@ -145,23 +144,44 @@ class Order extends Public_Controller {
 			// ambil data order settings
 			$settings = $this->streams->entries->get_entry(1, 'order_settings', 'streams');
 
+			$emailed_produk = array();
+			foreach ($produk as $value) {
+				$emailed_produk[] = array(
+						'product_name' => $value['product_name'],
+						'product_id' => $value['product_id'],
+						'product_price' => $this->settings->currency.' '.number_format($value['product_price'], 2, ",", "."),
+						'qty' => $value['qty'],
+						'sub_total' => $this->settings->currency.' '.number_format($value['sub_total'], 2, ",", ".")
+					);
+			}
+
 			// // Kirim email invoice pemesanan
-			// $sendemail['subject']    = $this->settings->site_name . ' - Invoice Pemesanan';
-			// $sendemail['slug']       = 'invoice-pemesanan';
-			// $sendemail['to']         = $data['datadiri']->emailPrimer;
-			// $sendemail['from']       = $this->settings->server_email;
-			// $sendemail['name']       = $this->settings->site_name;
-			// $sendemail['reply-to']   = $this->settings->contact_email;
-   //      	// Add in some extra details
-			// $sendemail['address']	= $order['shipping_address'];
-			// $sendemail['total']		= $order['order_total'];
-			// $sendemail['produk'] 	= $emailed_produk;
-			// $sendemail['bank']		= $settings->bank;
-			// $sendemail['no_rekening'] = $settings->no_rekening;
-			// $sendemail['owner_rek'] = $settings->owner_rek;
-			// $sendemail['telepon_konfirmasi'] = $settings->telepon_konfirmasi;
-   //      	// send the email using the template event found in system/cms/templates/
-			// Events::trigger('email', $sendemail, 'array');
+			$sendemail['subject']    = $this->settings->site_name . ' - Invoice Pemesanan';
+			$sendemail['slug']       = 'invoice-pemesanan';
+			$sendemail['to']         = $data['datadiri']->emailPrimer;
+			$sendemail['from']       = $this->settings->server_email;
+			$sendemail['name']       = $this->settings->site_name;
+			$sendemail['reply-to']   = $this->settings->contact_email;
+        	// Add in some extra details
+			$sendemail['address']	= $order['shipping_address'];
+			$sendemail['total']		= $this->settings->currency.' '.number_format($order['order_total'], 2, ",", ".");
+			$sendemail['produk'] 	= $emailed_produk;
+			$sendemail['bank']		= $settings->bank;
+			$sendemail['no_rekening'] = $settings->no_rekening;
+			$sendemail['owner_rek'] = $settings->owner_rek;
+			$sendemail['telepon_konfirmasi'] = $settings->telepon_konfirmasi;
+        	// send the email using the template event found in system/cms/templates/
+			Events::trigger('email', $sendemail, 'array');
+			
+			// send email konfirmasi ke admin
+			$sendemail['subject']    = $this->settings->site_name . ' - Notifikasi Pemesanan';
+			$sendemail['slug']       = 'notifikasi-pemesanan';
+			$sendemail['to']         = $this->settings->contact_email;
+			$sendemail['from']       = $this->settings->server_email;
+			$sendemail['name']       = $this->settings->site_name;
+			$sendemail['reply-to']   = $this->settings->server_email;
+
+			Events::trigger('email', $sendemail, 'array');
 
 
 			foreach($data['dataemail'] as $email){

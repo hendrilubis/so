@@ -40,6 +40,7 @@ class Events_Order{
 
 				if($to_order['total'] > 0)
 				{
+					$pernah_aktif = true;
 					foreach ($to_order['entries'] as $order)
 					{
 						// aktivasi user tryout, #sukses
@@ -51,15 +52,36 @@ class Events_Order{
 						// lalu simpan data ke tabel to_user #belumsukses
 						foreach ($paket as $pkt)
 						{
-							$to = array(
-								'user_id' => $order['user_id']['id'],
-								'status_pengerjaan' => 'belum',
-								'nilai' => 0,
-								'paket_id' => $pkt->id
-								);
-							$skips = array('jam_mulai', 'jam_selesai');
-							$this->ci->streams->entries->insert_entry($to, 'to_user', 'to_user', $skips);
-						}	
+							if(! $this->ci->order_m->cek_to_user($pkt->id, $order['user_id']['id']))
+							{	
+								$to = array(
+									'user_id' => $order['user_id']['id'],
+									'status_pengerjaan' => 'belum',
+									'nilai' => 0,
+									'paket_id' => $pkt->id
+									);
+								$skips = array('jam_mulai', 'jam_selesai');
+								$this->ci->streams->entries->insert_entry($to, 'to_user', 'streams', $skips);
+								$pernah_aktif = false;
+							}
+						}
+					}
+
+					// kalo baru diaktifkan pertama kali
+					if(! $pernah_aktif){
+						$this->ci->load->library('email');
+
+						// // Kirim email invoice pemesanan
+						$sendemail['subject']    = $this->ci->settings->site_name . ' - Aktivasi Tryout';
+						$sendemail['slug']       = 'aktivasi-tryout';
+						$sendemail['to']         = $to_order['entries'][0]['user_email']['email_address'];
+						$sendemail['from']       = $this->ci->settings->server_email;
+						$sendemail['name']       = $this->ci->settings->site_name;
+						$sendemail['reply-to']   = $this->ci->settings->contact_email;
+        				// Add in some extra details
+						$sendemail['generated_key']	= $to_order['entries'][0]['generated_key'];
+        				// send the email using the template event found in system/cms/templates/
+						Events::trigger('email', $sendemail, 'array');
 					}
 				}
 			}
