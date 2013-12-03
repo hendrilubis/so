@@ -31,7 +31,8 @@ class Admin extends Admin_Controller {
 				'namespace'		=> 'streams',
 				'paginate' 		=> 'yes',
 				'limit'			=> 10,
-				'page_segment' 	=> 4
+				'page_segment' 	=> 4,
+				'where' 		=> SITE_REF."_so_order.order_status = 'pending' "
 				);
 		$entries = $this->streams->entries->get_entries($params);
 
@@ -48,6 +49,15 @@ class Admin extends Admin_Controller {
 
 		if($this->input->post('status')){
 			$where .= SITE_REF."_so_order.order_status = '".$this->input->post('status')."' ";
+		} 
+
+		if($this->input->post('provinsi') != "all"){
+			$where .= "AND ".SITE_REF."_so_order.province = '".$this->input->post('provinsi')."' ";
+		}
+
+		if($this->input->post('nama') && trim($this->input->post('nama')) != ''){
+			$name = $this->order_m->search_name($this->input->post('nama'));
+			$where .= "AND ".SITE_REF."_so_order.user_id IN (".$name.") ";
 		}
 
 		$params = array(

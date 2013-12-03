@@ -38,6 +38,17 @@ class Order_m extends My_Model{
 
 	}
 
+	public function search_name($name){
+
+		$data = $this->db->select('user_id')->from('profiles')->like('display_name', $name, 'both')->get()->result();
+		$result = '';
+		foreach ($data as $hasil){
+			$result .= $hasil->user_id.',';
+		}
+		return substr($result, 0, strlen($result) - 1);
+
+	}
+
 	public function get_shipping(){
 
 		$data = $this->db->distinct()->select('id, destination, shipping_cost')->get('so_shipping')->result();

@@ -1,4 +1,5 @@
 	<?php if (!empty($entries)): ?>
+
 		<table border="0" class="table-list" cellspacing="0">
 			<thead>
 				<tr>
