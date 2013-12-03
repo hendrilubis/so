@@ -1,7 +1,6 @@
 <section class="title">
     <h4><?php echo lang('simple_order:order'); ?></h4>
 </section>
-<?php dump($entries);?>
 <section class="item">
     <div class="content">
         <fieldset id="filters">
