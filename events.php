@@ -79,6 +79,7 @@ class Events_Order{
 						$sendemail['name']       = $this->ci->settings->site_name;
 						$sendemail['reply-to']   = $this->ci->settings->contact_email;
         				// Add in some extra details
+						$sendemail['akun_email']	= $to_order['entries'][0]['user_email']['email_address'];
 						$sendemail['generated_key']	= $to_order['entries'][0]['generated_key'];
         				// send the email using the template event found in system/cms/templates/
 						Events::trigger('email', $sendemail, 'array');
