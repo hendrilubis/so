@@ -40,9 +40,11 @@ class Events_Order{
 
 				if($to_order['total'] > 0)
 				{
-					$pernah_aktif = true;
+					$this->ci->load->library('email');
+
 					foreach ($to_order['entries'] as $order)
 					{
+						$pernah_aktif = true;
 						// aktivasi user tryout, #sukses
 						$this->ci->ion_auth->activate($order['user_id']['id']);
 
@@ -65,24 +67,23 @@ class Events_Order{
 								$pernah_aktif = false;
 							}
 						}
-					}
 
-					// kalo baru diaktifkan pertama kali
-					if(! $pernah_aktif){
-						$this->ci->load->library('email');
+						// kalo baru diaktifkan pertama kali
+						if(! $pernah_aktif){
+							// // Kirim email invoice pemesanan
+							$sendemail['subject']    = $this->ci->settings->site_name . ' - Aktivasi Tryout';
+							$sendemail['slug']       = 'aktivasi-tryout';
+							$sendemail['to']         = $order['user_email']['email_address'];
+							$sendemail['from']       = $this->ci->settings->server_email;
+							$sendemail['name']       = $this->ci->settings->site_name;
+							$sendemail['reply-to']   = $this->ci->settings->contact_email;
+        					// Add in some extra details
+							$sendemail['akun_email']	= $order['user_email']['email_address'];
+							$sendemail['generated_key']	= $order['generated_key'];
+        					// send the email using the template event found in system/cms/templates/
+							Events::trigger('email', $sendemail, 'array');
+						}
 
-						// // Kirim email invoice pemesanan
-						$sendemail['subject']    = $this->ci->settings->site_name . ' - Aktivasi Tryout';
-						$sendemail['slug']       = 'aktivasi-tryout';
-						$sendemail['to']         = $to_order['entries'][0]['user_email']['email_address'];
-						$sendemail['from']       = $this->ci->settings->server_email;
-						$sendemail['name']       = $this->ci->settings->site_name;
-						$sendemail['reply-to']   = $this->ci->settings->contact_email;
-        				// Add in some extra details
-						$sendemail['akun_email']	= $to_order['entries'][0]['user_email']['email_address'];
-						$sendemail['generated_key']	= $to_order['entries'][0]['generated_key'];
-        				// send the email using the template event found in system/cms/templates/
-						Events::trigger('email', $sendemail, 'array');
 					}
 				}
 			}

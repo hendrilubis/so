@@ -57,6 +57,7 @@ class Admin extends Admin_Controller {
 
 		if($this->input->post('nama') && trim($this->input->post('nama')) != ''){
 			$name = $this->order_m->search_name($this->input->post('nama'));
+			if($name == '') $name = '0';
 			$where .= "AND ".SITE_REF."_so_order.user_id IN (".$name.") ";
 		}
 
@@ -92,6 +93,11 @@ class Admin extends Admin_Controller {
 
 		$order['profile'] = $this->ion_auth->get_user($order['data']->user_id);
 
+		$order['to_user'] = $this->db
+								->join('so_product', 'so_product.id = so_to_order.product_id')
+								->where('order_id', $id)
+								->get('so_to_order')->result();
+
 		$params = array(
 				'stream' => 'product_order',
 				'namespace' => 'streams',
@@ -104,11 +110,18 @@ class Admin extends Admin_Controller {
 	}
 
 	function delete_order($order_id){
-		$this->db->delete('so_order', array('id', $order_id));
-		$this->db->delete('so_product_order', array('order_id', $order_id));
-		$this->db->delete('so_to_order', array('order_id', $order_id));
+		// hapus data order
+		$this->db->delete('so_order', array('id' => $order_id));
 
-		redirect(getenv('HTTP_REFERER'));
+		// hapus data product ordernya
+		$this->db->delete('so_product_order', array('order_id' => $order_id));
+
+		// hapus data to order
+		$this->db->delete('so_to_order', array('order_id' => $order_id));
+
+
+		$this->session->set_flashdata('success', 'Data order berhasil dihapus.');
+		redirect('admin/order');
 	}
 
 	// public function update($id, $update){

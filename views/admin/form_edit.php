@@ -9,6 +9,7 @@
 	<div class="content">
 		<table>
             <tbody>
+                <tr><th colspan="3"><em style="font-size:18px;color:#888">Data Pemesan</em></th></tr>
                 <tr>
                 	<td>
                 		<dt>Nama Pemesan</dt>
@@ -37,7 +38,7 @@
     	<table>
         	<thead>
 	            <tr>
-	            	<th colspan="4" class="title"><em>Order Items</em></th>
+	            	<th colspan="4" class="title"><em style="font-size:18px;color:#888">Item Pemesanan</em></th>
 	            </tr>
 	            <tr>
 	            	<th>Product Code</th>
@@ -63,6 +64,27 @@
 	            	</tr>
 	        </tbody>
     	</table>
+        <br>
+
+        <?php if($to_user): ?>
+        <table>
+            <tbody>
+                <tr><th colspan="3"><em style="font-size:18px;color:#888">Akun Tryout</em></th></tr>
+                <tr>
+                    <th>User Email</th><th>Kode Akses</th><th>Tryout</th>
+                </tr>
+                <?php foreach ($to_user as $value): ?>
+                <tr>
+                    <td><?php echo $value->user_email; ?></td>
+                    <td><?php echo $value->generated_key; ?></td>
+                    <td><?php echo $value->product_code; ?></td>
+                </tr>
+                <?php endforeach; ?>
+            </tbody>
+        </table>
+        <br>
+        <?php endif; ?>
+
         <br>
         <div class="buttons" style="clear:both; text-align: right;">
             <a href="<?php echo site_url('admin/order/delete_order/'.$data->id); ?>" class="button grey confirm">Hapus Order</a>

@@ -75,7 +75,7 @@
             var oldstatus = $('#stream-table').attr('data-status');
             var oldprovinsi = $('#stream-table').attr('data-provinsi');
             var oldnama = $('#stream-table').attr('data-nama');
-            if(oldstatus != status || oldprovinsi != provinsi || oldnama != ""){
+            if(oldstatus != status || oldprovinsi != provinsi || oldnama != nama || oldnama != ""){
                 $('#stream-table').css('opacity', '.5');
                 $.ajax({
                     url: BASE_URL + 'admin/order/order/',
